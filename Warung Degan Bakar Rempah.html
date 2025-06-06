@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warung Degan Bakar</title>
+  <style>
+        body {  
+      margin: 0;  
+      font-family: 'Segoe UI', sans-serif;  
+      background-color: #003300;  
+      color: #fff;  
+      line-height: 1.6;  
+      text-align: center;
+    }  
+    header {  
+      background-color: #004d00;  
+      padding: 20px;  
+      text-align: center;  
+    }  
+    header h1 {  
+      font-size: 28px;  
+      color: #f9d923;  
+      margin: 0;  
+    }  
+    .section-title {  
+      text-align: center;  
+      font-size: 24px;  
+      margin-top: 30px;  
+      margin-bottom: 10px;  
+      color: #ffcc00;  
+      font-weight: bold;  
+    }  
+    .menu {  
+      display: flex;  
+      flex-wrap: wrap;  
+      justify-content: center;  
+      gap: 15px;  
+      padding: 15px;  
+    }  
+    .menu-img {
+      margin: 30px auto;
+      max-width: 90%;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+    .menu-item {  
+      background-color: #006600;  
+      border-radius: 10px;  
+      overflow: hidden;  
+      width: 250px;  
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);  
+      display: flex;  
+      flex-direction: column;  
+      align-items: center;  
+      padding: 8px;  
+      text-align: center;  
+    }  
+    .menu-item img {  
+      width: 100%;  
+      height: auto;  
+      border-radius: 10px;  
+    }  
+    .button-container {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .button-container a {
+      text-decoration: none;
+      background-color: #009966;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .button-container a:hover {
+      background-color: #00cc88;
+    }
+    .item-title {  
+      font-weight: bold;  
+      margin-top: 8px;  
+      font-size: 16px;  
+    }  
+    .item-price {  
+      margin-top: 5px;  
+      font-size: 15px;  
+      color: #ffd700;  
+    }  
+    .section {  
+      margin-top: 30px;  
+    }  
+    .buttons {  
+      display: flex;  
+      flex-wrap: wrap;  
+      justify-content: center;  
+      gap: 15px;  
+      margin: 30px 0;  
+    }  
+    .buttons a {  
+      padding: 12px 20px;  
+      background-color: #009966;  
+      color: #fff;  
+      text-decoration: none;  
+      border-radius: 8px;  
+      font-weight: bold;  
+      transition: background-color 0.3s;  
+    }  
+    .buttons a:hover {  
+      background-color: #00cc88;  
+    }  
+    footer {  
+      text-align: center;  
+      padding: 15px;  
+      background-color: #004d00;  
+      color: #ccc;  
+      margin-top: 40px;  
+    }  
+    footer {
+      margin-top: 40px;
+      color: #ccc;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Selamat Datang di Warung Degan Bakar Rempah & Sambal Obong Malang 😁🙏</h1>
+  </header>
+
+  <img src="IMG-20250605-WA0069.jpg" alt="Degan Bakar Original" class="menu-img">
+  <img src="Desain tanpa judul.png" alt="Degan Bakar Original" class="menu-img"
+
+<!-- Daftar Menu --> 
+<div class="section">
+<div class="section-title">Daftar Menu</div> </div> 
+
+<!-- Degan Bakar -->  
+<div class="section">  
+  <div class="section-title">Degan Bakar</div>  
+  <div class="menu">  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Bakar Ori (Tanpa Gula)" />  
+      <div class="item-title">Degan Bakar Ori (Tanpa Gula)</div>  
+      <div class="item-price">20K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Bakar Ori + Gula" />  
+      <div class="item-title">Degan Bakar Ori + Gula</div>  
+      <div class="item-price">21K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Bakar Ori + Gula + Jeruk Nipis" />  
+      <div class="item-title">Degan Bakar Ori + Gula + Jeruk Nipis</div>  
+      <div class="item-price">22K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Bakar Ori + Madu" />  
+      <div class="item-title">Degan Bakar Ori + Madu</div>  
+      <div class="item-price">25K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Bakar Rempah Lengkap" />  
+      <div class="item-title">Degan Bakar Rempah Lengkap</div>  
+      <div class="item-price">26K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Bakar Rempah Lengkap + Madu" />  
+      <div class="item-title">Degan Bakar Rempah Lengkap + Madu</div>  
+      <div class="item-price">30K</div>  
+    </div>
+      <div class="menu-item">  
+      <img src="" alt="Gambar Degan Bakar Rempah JJS (Jahe Jeruk Sereh)" />  
+      <div class="item-title">Degan Bakar Rempah JJS (Jahe Jeruk Sereh)</div>  
+      <div class="item-price">24K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Bakar Rempah JJS (Jahe Jeruk Sereh) + Madu" />  
+      <div class="item-title">Degan Bakar Rempah JJS (Jahe Jeruk Sereh) + Madu</div>  
+      <div class="item-price">29K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Bakar Kunyit + Madu + Jeruk Nipis" />  
+      <div class="item-title">Degan Bakar Kunyit + Madu + Jeruk Nipis</div>  
+      <div class="item-price">29K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Ijo Bakar Ori" />  
+      <div class="item-title">Degan Ijo Bakar Ori</div>  
+      <div class="item-price">28K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Ijo Bakar Rempah" />  
+      <div class="item-title">Degan Ijo Bakar Rempah</div>  
+      <div class="item-price">33K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Ijo Bakar Rempah + Madu" />  
+      <div class="item-title">Degan Ijo Bakar Rempah + Madu</div>  
+      <div class="item-price">38K</div>  
+    </div>  
+  </div>  
+</div>  
+
+<!-- Degan Utuh -->  
+<div class="section">  
+  <div class="section-title">Degan Utuh</div>  
+  <div class="menu">  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Biasa Utuh" />  
+      <div class="item-title">Degan Biasa Utuh</div>  
+      <div class="item-price">12K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Ijo Jamu Kecil" />  
+      <div class="item-title">Degan Ijo Jamu Kecil</div>  
+      <div class="item-price">15K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Ijo Jamu Sedang" />  
+      <div class="item-title">Degan Ijo Jamu Sedang</div>  
+      <div class="item-price">18K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Ijo Jamu Besar" />  
+      <div class="item-title">Degan Ijo Jamu Besar</div>  
+      <div class="item-price">20K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Ijo Jamu Super" />  
+      <div class="item-title">Degan Ijo Jamu Super</div>  
+      <div class="item-price">22K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Ijo Jamu Jumbo" />  
+      <div class="item-title">Degan Ijo Jamu Jumbo</div>  
+      <div class="item-price">25K</div>  
+    </div>
+  </div>  
+</div>  
+
+<!-- Degan Kemasan Cup -->  
+<div class="section">  
+  <div class="section-title">Degan Kemasan Cup</div>  
+  <div class="menu">  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Cup" />  
+      <div class="item-title">Es Degan Cup</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Air Degan Cup Murni (Air Saja)" />  
+      <div class="item-title">Air Degan Cup Murni (Air Saja)</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Degan Cup Ori (Tanpa Es)" />  
+      <div class="item-title">Degan Cup Ori (Tanpa Es)</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan + Jeruk Nipis" />  
+      <div class="item-title">Es Degan + Jeruk Nipis</div>  
+      <div class="item-price">8K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan + Susu" />  
+      <div class="item-title">Es Degan + Susu</div>  
+      <div class="item-price">8K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Cocopandan Tanpa Susu" />  
+      <div class="item-title">Es Degan Cocopandan Tanpa Susu</div>  
+      <div class="item-price">10K</div>  
+    </div>
+      <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Cocopandan Milk" />  
+      <div class="item-title">Es Degan Cocopandan Milk</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Melon Milk" />  
+      <div class="item-title">Es Degan Melon Milk</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Jambu Milk" />  
+      <div class="item-title">Es Degan Melon Milk</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Sirsak Milk" />  
+      <div class="item-title">Es Degan Sirsak Milk</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan + Madu" />  
+      <div class="item-title">Es Degan + Madu</div>  
+      <div class="item-price">12K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan + Madu + Jeruk" />  
+      <div class="item-title">Es Degan + Madu + Jeruk</div>  
+      <div class="item-price">12K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan + Durian + Susu" />  
+      <div class="item-title">Es Degan + Durian + Susu</div>  
+      <div class="item-price">15K</div>  
+    </div>  
+  </div>  
+</div>  
+
+<!-- Minuman Lain -->  
+<div class="section">  
+  <div class="section-title">Minuman Lain</div>  
+  <div class="menu">  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Teh Hangat" />  
+      <div class="item-title">Teh Hangat</div>  
+      <div class="item-price">5K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Teh" />  
+      <div class="item-title">Es Teh</div>  
+      <div class="item-price">5K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Teh Tarik" />  
+      <div class="item-title">Es Teh Tarik</div>  
+      <div class="item-price">8K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Kopi" />  
+      <div class="item-title">Es Degan + Jeruk Nipis</div>  
+      <div class="item-price">8K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan + Susu" />  
+      <div class="item-title">Es Degan + Susu</div>  
+      <div class="item-price">8K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Cocopandan Tanpa Susu" />  
+      <div class="item-title">Es Degan Cocopandan Tanpa Susu</div>  
+      <div class="item-price">10K</div>  
+    </div>
+      <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Cocopandan Milk" />  
+      <div class="item-title">Es Degan Cocopandan Milk</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Melon Milk" />  
+      <div class="item-title">Es Degan Melon Milk</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Jambu Milk" />  
+      <div class="item-title">Es Degan Melon Milk</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan Sirsak Milk" />  
+      <div class="item-title">Es Degan Sirsak Milk</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan + Madu" />  
+      <div class="item-title">Es Degan + Madu</div>  
+      <div class="item-price">12K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan + Madu + Jeruk" />  
+      <div class="item-title">Es Degan + Madu + Jeruk</div>  
+      <div class="item-price">12K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Es Degan + Durian + Susu" />  
+      <div class="item-title">Es Degan + Durian + Susu</div>  
+      <div class="item-price">15K</div>  
+    </div>  
+  </div>  
+</div>  
+
+<!-- Minuman Serba 7K -->
+<div class="section">  
+  <div class="section-title">Minuman Serba 7K</div>  
+  <div class="menu">  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Creamy Cappucino" />  
+      <div class="item-title">Creamy Cappucino</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Creamy Taro" />  
+      <div class="item-title">Creamy Taro</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Creamy Vanilla Latte" />  
+      <div class="item-title">Creamy Vanilla Latte</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Creamy Avocado" />  
+      <div class="item-title">Creamy Avocado</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Creamy Choco Cheese" />  
+      <div class="item-title">Creamy Choco Cheese</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Creamy Strawberry" />  
+      <div class="item-title">Creamy Strawberry</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Creamy Choco Cookies" />  
+      <div class="item-title">Creamy Choco Cookies</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+  </div>  
+</div>  
+
+<!-- Camilan -->  
+<div class="section">  
+  <div class="section-title">Camilan</div>  
+  <div class="menu">  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Bola-bola Singkong Isi 5" />  
+      <div class="item-title">Bola-bola Singkong Isi 5</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Bola-bola Singkong Isi 10" />  
+      <div class="item-title">Bola-bola Singkong Isi 10</div>  
+      <div class="item-price">12K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="IMG-20250605-WA0083.jpg" alt="Gambar Singkong Goreng Mekar" />  
+      <div class="item-title">Singkong Goreng Mekar</div>  
+      <div class="item-price">5K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Tahu Crispy Original" />  
+      <div class="item-title">Tahu Crispy Original</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="IMG-20250605-WA0087.jpg" alt="Gambar Tahu Crispy Balado" />  
+      <div class="item-title">Tahu Crispy Balado</div>  
+      <div class="item-price">8K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Tahu Crispy Keju" />  
+      <div class="item-title">Tahu Crispy Keju</div>  
+      <div class="item-price">8K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Tahu Crispy BBQ" />  
+      <div class="item-title">Tahu Crispy BBQ</div>  
+      <div class="item-price">8K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Tahu Gila Pedas" />  
+      <div class="item-title">Tahu Gila Pedas</div>  
+      <div class="item-price">9K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Onion Ring" />  
+      <div class="item-title">Onion Ring</div>  
+      <div class="item-price">12K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="IMG-20250605-WA0085.jpg" alt="Gambar French Fries Original" />  
+      <div class="item-title">French Fries Original</div>  
+      <div class="item-price">12K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar French Fries Keju" />  
+      <div class="item-title">French Fries Keju</div>  
+      <div class="item-price">13K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="IMG-20250605-WA0086.jpg" alt="Gambar French Fries Balado" />  
+      <div class="item-title">French Fries Balado</div>  
+      <div class="item-price">13K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar French Fries Pedas Gila" />  
+      <div class="item-title">French Fries Pedas Gila</div>  
+      <div class="item-price">14K</div>  
+    </div>  
+  </div>  
+</div>  
+
+<!-- Promo Paket 10K -->  
+<div class="section">  
+  <div class="section-title">Promo Paket 10K</div>  
+  <div class="menu">  
+    <div class="menu-item">  
+      <img src="IMG-20250605-WA0073.jpg" alt="Gambar Sambal Obong Telur Dadar" />  
+      <div class="item-title">Sambal Obong Telur Dadar</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="IMG-20250605-WA0071.jpg" alt="Gambar Sambal Obong Terong Crispy" />  
+      <div class="item-title">Sambal Obong Terong Crispy</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Tempe" />  
+      <div class="item-title">Sambal Obong Tempe</div>  
+      <div class="item-price">10K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Kepala Ayam" />  
+      <div class="item-title">Sambal Obong Kepala Ayam</div>  
+      <div class="item-price">12K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Jamur Crispy" />  
+      <div class="item-title">Sambal Obong Jamur Crispy</div>  
+      <div class="item-price">12K</div>  
+    </div>  
+  </div>  
+</div>  
+
+<!-- Promo Makanan Lain -->  
+<div class="section">  
+  <div class="section-title">Promo Makanan Lain</div>  
+  <div class="menu">  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Kremesan" />  
+      <div class="item-title">Kremesan</div>  
+      <div class="item-price">4K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar 1 Porsi Sambal Obong" />  
+      <div class="item-title">1 Porsi Sambal Obong</div>  
+      <div class="item-price">4K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Nasi Putih" />  
+      <div class="item-title">Nasi Putih</div>  
+      <div class="item-price">5K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Ayam + Kremesan Tanpa Sambal Tanpa Nasi" />  
+      <div class="item-title">Ayam + Kremesan Tanpa Sambal Tanpa Nasi</div>  
+      <div class="item-price">14K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Ikan Banyar Asap + Tempe Tanpa Nasi" />  
+      <div class="item-title">Sambal Obong Ikan Banyar Asap + Tempe Tanpa Nasi</div>  
+      <div class="item-price">14K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Ikan Kembung + Tempe Tanpa Nasi" />  
+      <div class="item-title">Sambal Obong Ikan Kembung + Tempe Tanpa Nasi</div>  
+      <div class="item-price">16K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Ikan Asin Klotok + Tempe + Nasi" />  
+      <div class="item-title">Sambal Obong Ikan Asin Klotok + Tempe + Nasi</div>  
+      <div class="item-price">14K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Ikan Pindang + Nasi" />  
+      <div class="item-title">Sambal Obong Ikan Pindang + Nasi</div>  
+      <div class="item-price">14K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Ayam Tanpa Nasi" />  
+      <div class="item-title">Sambal Obong Ayam Tanpa Nasi</div>  
+      <div class="item-price">16K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Ikan Patin Tanpa Nasi" />  
+      <div class="item-title">Sambal Obong Ikan Patin Tanpa Nasi</div>  
+      <div class="item-price">16K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Ikan Nila Tanpa Nasi" />  
+      <div class="item-title">Sambal Obong Ikan Nila Tanpa Nasi</div>  
+      <div class="item-price">17K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Ikan Cakalang Tanpa Nasi" />  
+      <div class="item-title">Sambal Obong Ikan Cakalang Tanpa Nasi</div>  
+      <div class="item-price">23K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="IMG-20250605-WA0075.jpg" alt="Gambar Sambal Obong Pedo (Utuh) + Tempe" />  
+      <div class="item-title">Sambal Obong Pedo (Utuh) + Tempe</div>  
+      <div class="item-price">18K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Baby Crab + Nasi" />  
+      <div class="item-title">Sambal Obong Baby Crab + Nasi</div>  
+      <div class="item-price">18K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="IMG-20250605-WA0070.jpg" alt="Gambar Sambal Obong Udang Crispy + Nasi" />  
+      <div class="item-title">Sambal Obong Udang Crispy + Nasi</div>  
+      <div class="item-price">25K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="IMG-20250605-WA0076.jpg" alt="Gambar Sambal Obong Cumi Crispy + Nasi" />  
+      <div class="item-title">Sambal Obong Cumi Crispy + Nasi</div>  
+      <div class="item-price">27K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sambal Obong Gurami + Nasi" />  
+      <div class="item-title">Sambal Obong Gurami + Nasi</div>  
+      <div class="item-price">40K</div>  
+    </div>  
+  </div>  
+</div>  
+
+<!-- Menu Warmindo -->  
+<div class="section">  
+  <div class="section-title">Menu Warmindo</div>  
+  <div class="menu">  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Mie Instan Goreng" />  
+      <div class="item-title">Mie Instan Goreng</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Mie Instan Kuah" />  
+      <div class="item-title">Mie Instan Kuah</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Mie Goreng Keju" />  
+      <div class="item-title">Mie Goreng Keju</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Mie Kuah Keju" />  
+      <div class="item-title">Mie Kuah Keju</div>  
+      <div class="item-price">7K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Sayur" />  
+      <div class="item-title">Sayur</div>  
+      <div class="item-price">1K</div>  
+    </div>  
+    <div class="menu-item">  
+      <img src="" alt="Gambar Telur" />  
+      <div class="item-title">Telur</div>  
+      <div class="item-price">5K</div>  
+    </div>
+      <div class="menu-item">  
+      <img src="" alt="Gambar Nasi" />  
+      <div class="item-title">Nasi</div>  
+      <div class="item-price">5K</div>  
+    </div>  
+  </div>  
+</div>  
+
+  <div class="button-container">
+    <a href="https://gofood.link/a/BEnVwjm" target="_blank">Pesan via GoFood</a>
+    <a href="https://r.grab.com/g/6-20250605_080524_99b3122c664b42528d30d3dc43533192_MEXMPS-6-C2XFREWUKFBVJT" target="_blank">Pesan via GrabFood</a>
+    <a href="https://shopee.co.id/universal-link/now-food/shop/1549087?deep_and_deferred=1&shareChannel=copy_link" target="_blank">Pesan via ShopeeFood</a>
+    <a href="https://wa.me/6289515299239?text=Halo,%20saya%20ingin%20pesan" target="_blank">Chat via WhatsApp</a>
+  </div>
+
+  <footer>
+    &copy; 2025 Warung Degan Bakar - Malang
+  </footer>
+</body>
+</html>
