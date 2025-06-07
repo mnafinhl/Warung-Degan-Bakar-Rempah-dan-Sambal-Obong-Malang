@@ -1,245 +1,309 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Warung Degan Bakar</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #003300;
-      color: #fff;
-      line-height: 1.6;
-      text-align: center;
-      padding: 20px;
-    }
-    header {
-      background-color: #004d00;
-      padding: 20px;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 28px;
-      color: #f9d923;
-      margin: 0;
-    }
-    .petunjuk-blink {
-      font-size: 18px;
-      font-weight: bold;
-      color: #ffffff;
-      animation: blink 1.2s infinite;
-      margin-top: 20px;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-    .section-title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      color: #ffcc00;
-    }
-    .menu {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      padding: 15px;
-    }
-    .menu-item {
-      background-color: #006600;
-      border-radius: 10px;
-      overflow: hidden;
-      width: 250px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 8px;
-      text-align: center;
-      cursor: pointer;
-      user-select: none;
-      transition: box-shadow 0.2s ease, transform 0.2s ease;
-    }
-    .menu-item:hover {
-      box-shadow: 0 0 12px #00cc88;
-      transform: scale(1.03);
-    }
-    .menu-item img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 10px;
-      pointer-events: none;
-      user-select: none;
-    }
-    .item-title {
-      font-weight: bold;
-      margin-top: 8px;
-      font-size: 16px;
-    }
-    .item-price {
-      margin-top: 5px;
-      font-size: 15px;
-      color: #ffd700;
-    }
-    #keranjang {
-      margin-top: 20px;
-      text-align: left;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      color: #fff;
-    }
-    .keranjang-item {
-      margin-bottom: 8px;
-      font-weight: 600;
-      user-select: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #004d00;
-      padding: 6px 10px;
-      border-radius: 6px;
-    }
-    .keranjang-item button {
-      margin-left: 10px;
-      background: #ff4c4c;
-      border: none;
-      border-radius: 4px;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-      padding: 2px 8px;
-      user-select: none;
-      transition: background-color 0.2s ease;
-    }
-    .keranjang-item button:hover {
-      background: #d93636;
-    }
-    .checkout-area {
-      margin-top: 20px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
-    .checkout-area select, .checkout-area button {
-      padding: 10px 15px;
-      font-size: 16px;
-      margin: 10px 5px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-    }
-    .checkout-area button {
-      background-color: #009966;
-      color: white;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-    .checkout-area button:hover {
-      background-color: #00cc88;
-    }
-    #messageTunai {
-      margin-top: 15px;
-      font-weight: bold;
-      color: #ffd700;
-    }
-    #qrisPopup {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-      z-index: 9999;
-    }
-    #qrisPopup > div {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      max-width: 320px;
-      width: 90%;
-      color: #000;
-    }
-    #qrisPopup img {
-      width: 200px;
-      height: auto;
-      margin-bottom: 10px;
-      user-select: none;
-      border-radius: 8px;
-    }
-    #qrisPopup button {
-      background-color: #009966;
-      border: none;
-      color: white;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #qrisPopup button:hover {
-      background-color: #00cc88;
-    }
-     /* Animasi blink putih */
-    .blink {
-      animation: blink-white 1.5s step-start 0s infinite;
-      color: white;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-    @keyframes blink-white {
-      50% { opacity: 0; }
-    }
-    /* Styling tombol link eksternal */
-    .button-container {
-      margin-top: 40px;
-      text-align: center;
-    }
-    .button-container a {
-      display: inline-block;
-      background-color: #009966;
-      color: white;
-      padding: 10px 20px;
-      margin: 5px;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-    .button-container a:hover {
-      background-color: #00cc88;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Warung Degan Bakar</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #003300;
+    color: #fff;
+    line-height: 1.6;
+    text-align: center;
+    padding: 20px;
+  }
+  header {
+    background-color: #004d00;
+    padding: 20px;
+  }
+  header h1 {
+    font-size: 28px;
+    color: #f9d923;
+    margin: 0;
+  }
+  .menu-img {
+    width: 300px;
+    margin: 15px 10px;
+    border-radius: 12px;
+    border: 3px solid #00cc88;
+  }
+  .blink {
+    margin: 20px 0;
+    font-weight: bold;
+    color: #f9d923;
+    animation: blinkAnim 1.5s infinite;
+  }
+  @keyframes blinkAnim {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .section {
+    margin: 30px auto;
+    max-width: 700px;
+    background-color: #005a00;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #00cc88;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #f9d923;
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  .daftar-menu-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #f9d923;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+  .menu-item {
+    background-color: #007700;
+    border-radius: 12px;
+    width: 150px;
+    cursor: pointer;
+    box-shadow: 0 0 8px #00cc88;
+    transition: transform 0.2s ease;
+    padding: 10px;
+    color: #fff;
+  }
+  .menu-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #00ffaa;
+  }
+  .menu-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+  .item-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .item-price {
+    font-weight: normal;
+    font-size: 14px;
+  }
+  #keranjang {
+    background-color: #004d00;
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #00cc88;
+    text-align: left;
+    color: #f9d923;
+  }
+  #keranjang h3 {
+    margin-top: 0;
+  }
+  .keranjang-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #00cc88;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .keranjang-item .info {
+    flex-grow: 1;
+    text-align: left;
+  }
+  .keranjang-item .info small {
+    display: block;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 13px;
+    margin-top: 2px;
+    color: #c9f1b8;
+  }
+  .keranjang-item button {
+    background-color: #cc0000;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+  }
+  .keranjang-item button:hover {
+    background-color: #ff4444;
+  }
+  .checkout-area {
+    max-width: 700px;
+    margin: 20px auto 50px;
+    background-color: #005a00;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #00cc88;
+    color: #f9d923;
+    text-align: center;
+  }
+  .checkout-area label {
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .checkout-area input[type="text"] {
+    padding: 8px;
+    margin: 10px 20px 20px 0;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    width: 180px;
+    font-size: 16px;
+    text-align: center;
+  }
+  .checkout-area .metode-pembayaran {
+    margin-bottom: 20px;
+  }
+  .checkout-area input[type="radio"] {
+    margin-left: 15px;
+    margin-right: 6px;
+    cursor: pointer;
+  }
+  .checkout-area button {
+    background-color: #00cc88;
+    border: none;
+    color: #004d00;
+    font-weight: bold;
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 5px 10px;
+    font-size: 16px;
+  }
+  .checkout-area button:hover {
+    background-color: #009966;
+  }
+  #messageTunai {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #f9d923;
+  }
+  footer {
+    margin-top: 50px;
+    text-align: center;
+    color: #f9d923;
+    font-weight: bold;
+  }
+  /* Popup Catatan */
+  #popupCatatan {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #004d00;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #00cc88;
+    z-index: 10010;
+    width: 320px;
+    color: #f9d923;
+  }
+  #popupCatatan textarea {
+    width: 100%;
+    height: 70px;
+    border-radius: 8px;
+    border: none;
+    padding: 8px;
+    resize: none;
+    font-size: 14px;
+    outline: none;
+  }
+  #popupCatatan button {
+    margin-top: 12px;
+    padding: 8px 20px;
+    background-color: #00cc88;
+    border: none;
+    color: #004d00;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  #popupCatatan button:hover {
+    background-color: #009966;
+  }
+  /* Overlay untuk popup */
+  #overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 10005;
+  }
+  /* QRIS Popup */
+  #qrisPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #00cc88;
+    z-index: 10020;
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+    color: #000;
+  }
+  #qrisPopup img {
+    width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    user-select: none;
+  }
+  #qrisPopup button {
+    background-color: #009966;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  #qrisPopup button:hover {
+    background-color: #00cc88;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Selamat Datang di Warung Degan Bakar Rempah & Sambal Obong Malang 😁🙏</h1>
-  </header>
-  
-  <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0069.jpg" alt="Degan Bakar Original" class="menu-img">
-  <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/Desain%20tanpa%20judul.png" alt="Degan Bakar Original" class="menu-img"
 
-  <!-- Petunjuk Pemesanan -->
-  <div class="petunjuk-blink">
-    Untuk Memesan Silahkan Klik Menu Yang Anda Inginkan, Jumlah Pesanan Sesuai Dengan Banyaknya Menu Yang Anda Klik
-  </div>
+<header>
+  <h1>Selamat Datang di Warung Degan Bakar Rempah & Sambal Obong Malang 😁🙏</h1>
+</header>
 
-<!-- Daftar Menu --> 
-<div class="section">
-<div class="section-title">Daftar Menu</div> </div> 
+<img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0069.jpg" alt="Degan Bakar Original" class="menu-img" />
+<img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/Desain%20tanpa%20judul.png" alt="Degan Bakar Original" class="menu-img" />
+
+<div class="blink">
+  Untuk Memesan Silahkan Klik Menu Yang Anda Inginkan, Jumlah Pesanan Sesuai Dengan Banyaknya Menu Yang Anda Klik
+</div>
 
 <!-- Degan Bakar -->  
 <div class="section">  
-  <div class="section-title">Degan Bakar</div>  
+  <div class="daftar-menu-title">Degan Bakar</div>  
   <div class="menu">  
     <div class="menu-item">  
       <img src="" alt="Gambar Degan Bakar Ori (Tanpa Gula)" />  
@@ -306,7 +370,7 @@
 
 <!-- Degan Utuh -->  
 <div class="section">  
-  <div class="section-title">Degan Utuh</div>  
+  <div class="daftar-menu-title">Degan Utuh</div>  
   <div class="menu">  
     <div class="menu-item">  
       <img src="" alt="Gambar Degan Biasa Utuh" />  
@@ -343,7 +407,7 @@
 
 <!-- Degan Kemasan Cup -->  
 <div class="section">  
-  <div class="section-title">Degan Kemasan Cup</div>  
+  <div class="daftar-menu-title">Degan Kemasan Cup</div>  
   <div class="menu">  
     <div class="menu-item">  
       <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0116.jpg" alt="Gambar Es Degan Cup" />  
@@ -415,7 +479,7 @@
 
 <!-- Minuman Lain -->  
 <div class="section">  
-  <div class="section-title">Minuman Lain</div>  
+  <div class="daftar-menu-title">Minuman Lain</div>  
   <div class="menu">  
     <div class="menu-item">  
       <img src="" alt="Gambar Teh Hangat" />  
@@ -487,7 +551,7 @@
 
 <!-- Minuman Serba 7K -->
 <div class="section">  
-  <div class="section-title">Minuman Serba 7 Ribu</div>  
+  <div class="daftar-menu-title">Minuman Serba 7 Ribu</div>  
   <div class="menu">  
     <div class="menu-item">  
       <img src="" alt="Gambar Creamy Cappucino" />  
@@ -529,7 +593,7 @@
 
 <!-- Camilan -->  
 <div class="section">  
-  <div class="section-title">Camilan</div>  
+  <div class="daftar-menu-title">Camilan</div>  
   <div class="menu">  
     <div class="menu-item">  
       <img src="" alt="Gambar Bola-bola Singkong Isi 5" />  
@@ -601,7 +665,7 @@
 
 <!-- Promo Paket 10K -->  
 <div class="section">  
-  <div class="section-title">Promo Paket 10K</div>  
+  <div class="daftar-menu-title">Promo Paket 10K</div>  
   <div class="menu">  
     <div class="menu-item">  
       <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0073.jpg" alt="Gambar Sambal Obong Telur Dadar" />  
@@ -633,7 +697,7 @@
 
 <!-- Promo Makanan Lain -->  
 <div class="section">  
-  <div class="section-title">Promo Makanan Lain</div>  
+  <div class="daftar-menu-title">Promo Makanan Lain</div>  
   <div class="menu">  
     <div class="menu-item">  
       <img src="" alt="Gambar Kremesan" />  
@@ -725,7 +789,7 @@
 
 <!-- Menu Warmindo -->  
 <div class="section">  
-  <div class="section-title">Menu Warmindo</div>  
+  <div class="daftar-menu-title">Menu Warmindo</div>  
   <div class="menu">  
     <div class="menu-item">  
       <img src="" alt="Gambar Mie Instan Goreng" />  
@@ -765,122 +829,176 @@
   </div>  
 </div>  
 
-<div id="keranjang">
-    <h3>Keranjang Pesanan:</h3>
-    <div id="items"></div>
-    <div><strong>Total: Rp <span id="totalHarga">0</span></strong></div>
+<div id="keranjang" class="section">
+  <h3>Keranjang Pesanan</h3>
+  <div id="daftarPesanan"></div>
+  <div id="totalHarga">Total: Rp 0</div>
+</div>
+
+<div class="checkout-area">
+  <label for="namaPembeli">Nama Pembeli:</label>
+  <input type="text" id="namaPembeli" placeholder="Masukkan nama Anda" />
+
+  <label for="nomorMeja">Nomor Meja:</label>
+  <input type="text" id="nomorMeja" placeholder="Nomor Meja" />
+
+  <div class="metode-pembayaran">
+    <label>Metode Pembayaran:</label>
+    <input type="radio" id="metodeQRIS" name="metodeBayar" value="qris" checked />
+    <label for="metodeQRIS">QRIS</label>
+    <input type="radio" id="metodeKasir" name="metodeBayar" value="kasir" />
+    <label for="metodeKasir">Bayar di Kasir</label>
   </div>
 
-  <div class="checkout-area">
-    <label for="nomorMeja">Nomor Meja:</label>
-    <input type="number" id="nomorMeja" min="1" style="width:60px; padding:5px; margin-left:10px;" />
-    <br />
-    <label for="metodeBayar">Metode Pembayaran:</label>
-    <select id="metodeBayar" style="margin-left:10px; padding:5px;">
-      <option value="">Pilih Metode</option>
-      <option value="tunai">Tunai</option>
-      <option value="qris">QRIS</option>
-    </select>
-    <br />
-    <button onclick="checkout()">Checkout</button>
+  <button id="btnCheckout" onclick="checkout()">Checkout</button>
+  <button id="btnShowQRIS" onclick="tampilkanQRIS()">Tampilkan QRIS</button>
 
-    <div id="messageTunai"></div>
-  </div>
+  <div id="messageTunai"></div>
+</div>
 
-  <!-- Popup QRIS -->
-  <div id="qrisPopup">
-    <div>
-      <img src="https://i.ibb.co/YbP52dC/qris-sample.png" alt="QRIS" />
-      <p>Scan QRIS untuk membayar</p>
-      <button id="btnSelesai">Selesai</button>
-    </div>
-  </div>
+<!-- Popup Catatan -->
+<div id="overlay"></div>
+<div id="popupCatatan">
+  <h3>Catatan Pesanan</h3>
+  <textarea id="catatanInput" placeholder="Tulis catatan (opsional)"></textarea>
+  <button onclick="tambahKeKeranjang()">Tambah ke Keranjang</button>
+</div>
 
-  <script>
-    let keranjang = {};
+<!-- Popup QRIS -->
+<div id="qrisPopup">
+  <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/QRIS PAYMENT.jpg" alt="QRIS" />
+  <p>Scan QRIS untuk pembayaran</p>
+  <button onclick="tutupQRIS()">Tutup</button>
+</div>
 
-    function tambahMenu(elem) {
-      const name = elem.getAttribute('data-name');
-      const price = parseInt(elem.getAttribute('data-price'));
+<script>
+  const keranjang = [];
+  let menuDipilih = null;
 
-      if (keranjang[name]) {
-        keranjang[name].jumlah++;
-      } else {
-        keranjang[name] = { harga: price, jumlah: 1 };
-      }
-      renderKeranjang();
+  function bukaPopupCatatan(elem) {
+    menuDipilih = elem;
+    document.getElementById('catatanInput').value = '';
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('popupCatatan').style.display = 'block';
+  }
+
+  function tambahKeKeranjang() {
+    const nama = menuDipilih.getAttribute('data-name');
+    const harga = parseInt(menuDipilih.getAttribute('data-price'));
+    const catatan = document.getElementById('catatanInput').value.trim();
+
+    const idx = keranjang.findIndex(item => item.nama === nama && item.catatan === catatan);
+
+    if (idx !== -1) {
+      keranjang[idx].jumlah++;
+    } else {
+      keranjang.push({ nama, harga, jumlah: 1, catatan });
     }
 
-    function kurangiMenu(name) {
-      if (keranjang[name].jumlah > 1) {
-        keranjang[name].jumlah--;
-      } else {
-        delete keranjang[name];
-      }
-      renderKeranjang();
-    }
+    tampilkanKeranjang();
+    tutupPopupCatatan();
+  }
 
-    function renderKeranjang() {
-      const container = document.getElementById('items');
-      container.innerHTML = '';
-      let total = 0;
+  function tutupPopupCatatan() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('popupCatatan').style.display = 'none';
+  }
 
-      for (const [name, data] of Object.entries(keranjang)) {
-        total += data.harga * data.jumlah;
+  function tampilkanKeranjang() {
+    const daftar = document.getElementById('daftarPesanan');
+    daftar.innerHTML = '';
+    let total = 0;
 
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'keranjang-item';
-        itemDiv.innerHTML = `
-          ${name} (${data.jumlah}x) - Rp ${data.harga * data.jumlah}
-          <button onclick="kurangiMenu('${name}')">X</button>
-        `;
-        container.appendChild(itemDiv);
-      }
+    keranjang.forEach((item, idx) => {
+      total += item.harga * item.jumlah;
 
-      document.getElementById('totalHarga').innerText = total;
-      document.getElementById('messageTunai').innerText = '';
-    }
+      const div = document.createElement('div');
+      div.className = 'keranjang-item';
 
-    function checkout() {
-      const nomorMeja = document.getElementById('nomorMeja').value;
-      const metodeBayar = document.getElementById('metodeBayar').value;
-      const totalHarga = document.getElementById('totalHarga').innerText;
+      const info = document.createElement('div');
+      info.className = 'info';
+      info.innerHTML = `<strong>${item.nama}</strong> x${item.jumlah} - Rp ${item.harga * item.jumlah}<br/><small>Catatan: ${item.catatan || '-'}</small>`;
 
-      if (!nomorMeja) {
-        alert('Silakan isi nomor meja terlebih dahulu.');
-        return;
-      }
+      const btnHapus = document.createElement('button');
+      btnHapus.textContent = 'Hapus';
+      btnHapus.onclick = () => {
+        if (item.jumlah > 1) {
+          item.jumlah--;
+        } else {
+          keranjang.splice(idx, 1);
+        }
+        tampilkanKeranjang();
+      };
 
-      if (!metodeBayar) {
-        alert('Silakan pilih metode pembayaran.');
-        return;
-      }
-
-      if (metodeBayar === 'tunai') {
-        document.getElementById('messageTunai').innerText =
-          `Silakan bayar tunai sebesar Rp ${totalHarga} ke kasir.`;
-      } else if (metodeBayar === 'qris') {
-        document.getElementById('qrisPopup').style.display = 'flex';
-      }
-    }
-
-    document.getElementById('btnSelesai').addEventListener('click', function () {
-      document.getElementById('qrisPopup').style.display = 'none';
+      div.appendChild(info);
+      div.appendChild(btnHapus);
+      daftar.appendChild(div);
     });
-  </script>
-</body>
-</html>
 
-<h1>Anda Juga Dapat Menemukan Kami Di Aplikasi Lain Melalui Link Dibawah Berikut😁</h1>
-  <div class="button-container">
-    <a href="https://gofood.link/a/BEnVwjm" target="_blank">Pesan via GoFood</a>
-    <a href="https://r.grab.com/g/6-20250605_080524_99b3122c664b42528d30d3dc43533192_MEXMPS-6-C2XFREWUKFBVJT" target="_blank">Pesan via GrabFood</a>
-    <a href="https://shopee.co.id/universal-link/now-food/shop/1549087?deep_and_deferred=1&shareChannel=copy_link" target="_blank">Pesan via ShopeeFood</a>
-    <a href="https://wa.me/6289515299239?text=Halo,%20saya%20ingin%20pesan" target="_blank">Chat via WhatsApp</a>
-  </div>
+    document.getElementById('totalHarga').textContent = `Total: Rp ${total}`;
+  }
 
-  <footer>
-    &copy; 2025 Warung Degan Bakar - Malang
-  </footer>
+  function checkout() {
+    const nama = document.getElementById('namaPembeli').value.trim();
+    const meja = document.getElementById('nomorMeja').value.trim();
+
+    if (!nama || !meja) {
+      alert('Mohon isi Nama Pembeli dan Nomor Meja sebelum checkout!');
+      return;
+    }
+
+    if (keranjang.length === 0) {
+      alert('Keranjang kosong! Silakan pilih menu terlebih dahulu.');
+      return;
+    }
+
+    alert(`Terima kasih ${nama} dari meja ${meja}, pesanan Anda sedang diproses.\nTotal pembayaran: ${document.getElementById('totalHarga').textContent}`);
+  }
+
+  function tampilkanQRIS() {
+    document.getElementById('qrisPopup').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+  }
+
+  function tutupQRIS() {
+    document.getElementById('qrisPopup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+  }
+
+  // Tampilkan tombol sesuai metode bayar
+  const radios = document.querySelectorAll('input[name="metodeBayar"]');
+  const btnCheckout = document.getElementById('btnCheckout');
+  const btnShowQRIS = document.getElementById('btnShowQRIS');
+
+  function updateButtons() {
+    if (document.getElementById('metodeQRIS').checked) {
+      btnCheckout.style.display = 'none';
+      btnShowQRIS.style.display = 'inline-block';
+      document.getElementById('messageTunai').textContent = '';
+    } else {
+      btnCheckout.style.display = 'inline-block';
+      btnShowQRIS.style.display = 'none';
+      document.getElementById('messageTunai').textContent = 'Silahkan bayar di kasir saat pesanan selesai.';
+    }
+  }
+
+  radios.forEach(radio => {
+    radio.addEventListener('change', updateButtons);
+  });
+
+  // Inisialisasi tombol
+  updateButtons();
+
+  // Overlay klik tutup semua popup
+  document.getElementById('overlay').onclick = () => {
+    tutupPopupCatatan();
+    tutupQRIS();
+  };
+</script>
+
+<footer>
+  &copy; 2021 Warung Degan Bakar Rempah & Sambal Obong Malang
+</footer>
+
 </body>
 </html>
