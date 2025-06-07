@@ -1,130 +1,222 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Warung Degan Bakar</title>
   <style>
-        body {  
-      margin: 0;  
-      font-family: 'Segoe UI', sans-serif;  
-      background-color: #003300;  
-      color: #fff;  
-      line-height: 1.6;  
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #003300;
+      color: #fff;
+      line-height: 1.6;
       text-align: center;
-    }  
-    header {  
-      background-color: #004d00;  
-      padding: 20px;  
-      text-align: center;  
-    }  
-    header h1 {  
-      font-size: 28px;  
-      color: #f9d923;  
-      margin: 0;  
-    }  
-    .section-title {  
-      text-align: center;  
-      font-size: 24px;  
-      margin-top: 30px;  
-      margin-bottom: 10px;  
-      color: #ffcc00;  
-      font-weight: bold;  
-    }  
-    .menu {  
-      display: flex;  
-      flex-wrap: wrap;  
-      justify-content: center;  
-      gap: 15px;  
-      padding: 15px;  
-    }  
-    .menu-img {
-      margin: 30px auto;
-      max-width: 90%;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      padding: 20px;
     }
-    .menu-item {  
-      background-color: #006600;  
-      border-radius: 10px;  
-      overflow: hidden;  
-      width: 250px;  
-      box-shadow: 0 0 8px rgba(0,0,0,0.3);  
-      display: flex;  
-      flex-direction: column;  
-      align-items: center;  
-      padding: 8px;  
-      text-align: center;  
-    }  
-    .menu-item img {  
-      width: 100%;  
-      height: auto;  
-      border-radius: 10px;  
-    }  
-    .button-container {
+    header {
+      background-color: #004d00;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 28px;
+      color: #f9d923;
+      margin: 0;
+    }
+    .petunjuk-blink {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffffff;
+      animation: blink 1.2s infinite;
       margin-top: 20px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .section-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      color: #ffcc00;
+    }
+    .menu {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 15px;
+      padding: 15px;
     }
-
-    .button-container a {
-      text-decoration: none;
+    .menu-item {
+      background-color: #006600;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 250px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .menu-item:hover {
+      box-shadow: 0 0 12px #00cc88;
+      transform: scale(1.03);
+    }
+    .menu-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .item-title {
+      font-weight: bold;
+      margin-top: 8px;
+      font-size: 16px;
+    }
+    .item-price {
+      margin-top: 5px;
+      font-size: 15px;
+      color: #ffd700;
+    }
+    #keranjang {
+      margin-top: 20px;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #fff;
+    }
+    .keranjang-item {
+      margin-bottom: 8px;
+      font-weight: 600;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #004d00;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+    .keranjang-item button {
+      margin-left: 10px;
+      background: #ff4c4c;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      padding: 2px 8px;
+      user-select: none;
+      transition: background-color 0.2s ease;
+    }
+    .keranjang-item button:hover {
+      background: #d93636;
+    }
+    .checkout-area {
+      margin-top: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    .checkout-area select, .checkout-area button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin: 10px 5px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+    .checkout-area button {
       background-color: #009966;
       color: white;
-      padding: 12px 20px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    .checkout-area button:hover {
+      background-color: #00cc88;
+    }
+    #messageTunai {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #ffd700;
+    }
+    #qrisPopup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      z-index: 9999;
+    }
+    #qrisPopup > div {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 320px;
+      width: 90%;
+      color: #000;
+    }
+    #qrisPopup img {
+      width: 200px;
+      height: auto;
+      margin-bottom: 10px;
+      user-select: none;
+      border-radius: 8px;
+    }
+    #qrisPopup button {
+      background-color: #009966;
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #qrisPopup button:hover {
+      background-color: #00cc88;
+    }
+     /* Animasi blink putih */
+    .blink {
+      animation: blink-white 1.5s step-start 0s infinite;
+      color: white;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    @keyframes blink-white {
+      50% { opacity: 0; }
+    }
+    /* Styling tombol link eksternal */
+    .button-container {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .button-container a {
+      display: inline-block;
+      background-color: #009966;
+      color: white;
+      padding: 10px 20px;
+      margin: 5px;
+      text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
       transition: background-color 0.3s ease;
     }
-
     .button-container a:hover {
       background-color: #00cc88;
-    }
-    .item-title {  
-      font-weight: bold;  
-      margin-top: 8px;  
-      font-size: 16px;  
-    }  
-    .item-price {  
-      margin-top: 5px;  
-      font-size: 15px;  
-      color: #ffd700;  
-    }  
-    .section {  
-      margin-top: 30px;  
-    }  
-    .buttons {  
-      display: flex;  
-      flex-wrap: wrap;  
-      justify-content: center;  
-      gap: 15px;  
-      margin: 30px 0;  
-    }  
-    .buttons a {  
-      padding: 12px 20px;  
-      background-color: #009966;  
-      color: #fff;  
-      text-decoration: none;  
-      border-radius: 8px;  
-      font-weight: bold;  
-      transition: background-color 0.3s;  
-    }  
-    .buttons a:hover {  
-      background-color: #00cc88;  
-    }  
-    footer {  
-      text-align: center;  
-      padding: 15px;  
-      background-color: #004d00;  
-      color: #ccc;  
-      margin-top: 40px;  
-    }  
-    footer {
-      margin-top: 40px;
-      color: #ccc;
-      font-size: 14px;
     }
   </style>
 </head>
@@ -135,6 +227,11 @@
   
   <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0069.jpg" alt="Degan Bakar Original" class="menu-img">
   <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/Desain%20tanpa%20judul.png" alt="Degan Bakar Original" class="menu-img"
+
+  <!-- Petunjuk Pemesanan -->
+  <div class="petunjuk-blink">
+    Untuk Memesan Silahkan Klik Menu Yang Anda Inginkan, Jumlah Pesanan Sesuai Dengan Banyaknya Menu Yang Anda Klik
+  </div>
 
 <!-- Daftar Menu --> 
 <div class="section">
@@ -667,7 +764,114 @@
     </div>  
   </div>  
 </div>  
-<h1>Anda Juga Dapat Menemukan Kami Di Aplikasi Lain Melalui Link Dibawah Berikut</h1>
+
+<div id="keranjang">
+    <h3>Keranjang Pesanan:</h3>
+    <div id="items"></div>
+    <div><strong>Total: Rp <span id="totalHarga">0</span></strong></div>
+  </div>
+
+  <div class="checkout-area">
+    <label for="nomorMeja">Nomor Meja:</label>
+    <input type="number" id="nomorMeja" min="1" style="width:60px; padding:5px; margin-left:10px;" />
+    <br />
+    <label for="metodeBayar">Metode Pembayaran:</label>
+    <select id="metodeBayar" style="margin-left:10px; padding:5px;">
+      <option value="">Pilih Metode</option>
+      <option value="tunai">Tunai</option>
+      <option value="qris">QRIS</option>
+    </select>
+    <br />
+    <button onclick="checkout()">Checkout</button>
+
+    <div id="messageTunai"></div>
+  </div>
+
+  <!-- Popup QRIS -->
+  <div id="qrisPopup">
+    <div>
+      <img src="https://i.ibb.co/YbP52dC/qris-sample.png" alt="QRIS" />
+      <p>Scan QRIS untuk membayar</p>
+      <button id="btnSelesai">Selesai</button>
+    </div>
+  </div>
+
+  <script>
+    let keranjang = {};
+
+    function tambahMenu(elem) {
+      const name = elem.getAttribute('data-name');
+      const price = parseInt(elem.getAttribute('data-price'));
+
+      if (keranjang[name]) {
+        keranjang[name].jumlah++;
+      } else {
+        keranjang[name] = { harga: price, jumlah: 1 };
+      }
+      renderKeranjang();
+    }
+
+    function kurangiMenu(name) {
+      if (keranjang[name].jumlah > 1) {
+        keranjang[name].jumlah--;
+      } else {
+        delete keranjang[name];
+      }
+      renderKeranjang();
+    }
+
+    function renderKeranjang() {
+      const container = document.getElementById('items');
+      container.innerHTML = '';
+      let total = 0;
+
+      for (const [name, data] of Object.entries(keranjang)) {
+        total += data.harga * data.jumlah;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'keranjang-item';
+        itemDiv.innerHTML = `
+          ${name} (${data.jumlah}x) - Rp ${data.harga * data.jumlah}
+          <button onclick="kurangiMenu('${name}')">X</button>
+        `;
+        container.appendChild(itemDiv);
+      }
+
+      document.getElementById('totalHarga').innerText = total;
+      document.getElementById('messageTunai').innerText = '';
+    }
+
+    function checkout() {
+      const nomorMeja = document.getElementById('nomorMeja').value;
+      const metodeBayar = document.getElementById('metodeBayar').value;
+      const totalHarga = document.getElementById('totalHarga').innerText;
+
+      if (!nomorMeja) {
+        alert('Silakan isi nomor meja terlebih dahulu.');
+        return;
+      }
+
+      if (!metodeBayar) {
+        alert('Silakan pilih metode pembayaran.');
+        return;
+      }
+
+      if (metodeBayar === 'tunai') {
+        document.getElementById('messageTunai').innerText =
+          `Silakan bayar tunai sebesar Rp ${totalHarga} ke kasir.`;
+      } else if (metodeBayar === 'qris') {
+        document.getElementById('qrisPopup').style.display = 'flex';
+      }
+    }
+
+    document.getElementById('btnSelesai').addEventListener('click', function () {
+      document.getElementById('qrisPopup').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
+
+<h1>Anda Juga Dapat Menemukan Kami Di Aplikasi Lain Melalui Link Dibawah Berikut😁</h1>
   <div class="button-container">
     <a href="https://gofood.link/a/BEnVwjm" target="_blank">Pesan via GoFood</a>
     <a href="https://r.grab.com/g/6-20250605_080524_99b3122c664b42528d30d3dc43533192_MEXMPS-6-C2XFREWUKFBVJT" target="_blank">Pesan via GrabFood</a>
