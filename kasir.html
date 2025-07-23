@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kasir Warung Degan Bakar</title>
+<script src="/socket.io/socket.io.js"></script>
+<style>
+    /* ... (CSS Anda yang sudah ada, tidak ada perubahan di sini) ... */
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #003300; /* Dark green background */
+        color: #fff;
+        line-height: 1.6;
+        padding: 20px;
+    }
+    header {
+        background-color: #004d00; /* Darker green for header */
+        color: #f9d923; /* Yellowish accent for text */
+        padding: 20px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex; /* Untuk menata elemen di header */
+        justify-content: space-between; /* Menjauhkan judul dan tombol logout */
+        align-items: center;
+    }
+    header h1 {
+        font-size: 28px;
+        margin: 0;
+        flex-grow: 1; /* Mengisi ruang yang tersedia */
+    }
+    header p {
+        margin: 5px 0 0;
+        font-size: 1.1em;
+        color: #c9f1b8; /* Lighter green accent */
+    }
+    h2 {
+        color: #f9d923; /* Yellowish accent for headings */
+        margin-top: 0;
+        border-bottom: 2px solid #00cc88;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    #orders-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    .order-card {
+        background-color: #004d00;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Untuk menempatkan tombol di bawah */
+    }
+    .order-card h3 {
+        color: #f9d923;
+        margin-top: 0;
+        font-size: 1.5em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px dashed #006600;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+    .order-card h3 span {
+        font-size: 0.8em;
+        color: #c9f1b8;
+    }
+    .order-card p {
+        margin: 5px 0;
+        font-size: 0.9em;
+        color: #c9f1b8;
+    }
+    .order-card strong {
+        color: #00cc88;
+    }
+    .order-card .total-price {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #f9d923;
+        margin-top: 10px;
+    }
+    .order-items-list {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0;
+        border-top: 1px dashed #006600;
+        padding-top: 10px;
+    }
+    .order-items-list li {
+        margin-bottom: 5px;
+        color: #c9f1b8;
+    }
+    .order-items-list li span {
+        font-weight: bold;
+    }
+    .order-actions {
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap; /* Mengizinkan wrap untuk tombol yang banyak */
+        gap: 10px; /* Jarak antar tombol */
+    }
+    .order-actions button, .order-actions a {
+        flex-grow: 1; /* Agar tombol mengisi ruang yang tersedia */
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9em;
+        transition: background-color 0.3s ease;
+        text-decoration: none; /* Untuk tautan */
+        text-align: center;
+        color: white; /* Warna teks untuk tautan */
+    }
+    .status-dropdown {
+        flex-grow: 1;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #006600;
+        color: white;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+    .btn-update { background-color: #008000; }
+    .btn-update:hover { background-color: #00cc00; }
+    .btn-complete { background-color: #0066cc; }
+    .btn-complete:hover { background-color: #0088ff; }
+    .btn-cancel { background-color: #cc0000; }
+    .btn-cancel:hover { background-color: #ff3333; }
+    .btn-print { background-color: #808080; } /* Abu-abu untuk cetak */
+    .btn-print:hover { background-color: #a0a0a0; }
+    .btn-logout { background-color: #ff4d4d; color: white; border-radius: 5px; padding: 10px 15px; cursor: pointer; border: none; font-size: 0.9em; }
+    .btn-logout:hover { background-color: #ff1a1a; }
+
+
+    /* Bukti transfer link */
+    .proof-link {
+        color: #00cc88;
+        text-decoration: underline;
+        margin-top: 5px;
+        display: block;
+    }
+    .proof-link:hover {
+        color: #00ffaa;
+    }
+
+    /* --- PENTING: BAGIAN CSS UNTUK PENCETAKAN STRUK (Cetak ke 80mm atau diskala ke 58mm) --- */
+    @media print {
+        #app-content,
+        #login-container {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            position: absolute !important;
+            left: -9999px !important;
+            top: -9999px !important;
+        }
+        #receipt-print-area {
+            display: block !important;
+            position: relative !important;
+            width: 80mm !important;
+            max-width: 80mm !important;
+            margin: 0 auto !important;
+            padding: 5mm !important;
+            box-sizing: border-box !important;
+            font-family: 'Consolas', 'Courier New', monospace !important;
+            font-size: 10px !important;
+            color: black !important;
+            background-color: white !important;
+            overflow: visible !important;
+            height: auto !important;
+        }
+        #receipt-print-area pre {
+            white-space: pre !important;
+            word-wrap: normal !important;
+            overflow: visible !important;
+            line-height: 1.2 !important;
+            color: black !important;
+            background-color: white !important;
+        }
+        body {
+            background-color: white !important;
+            color: black !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    }
+    #receipt-print-area {
+        display: none; 
+    }
+
+
+    /* CSS Form Login */
+    #login-container {
+        background-color: #004d00;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        text-align: center;
+        width: 100%;
+        max-width: 400px;
+        margin: 50px auto; /* Tengahkan di halaman */
+    }
+    #login-container h2 {
+        color: #f9d923;
+        margin-bottom: 30px;
+        font-size: 2em;
+    }
+    #login-container .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    #login-container label {
+        display: block;
+        margin-bottom: 8px;
+        color: #c9f1b8;
+        font-weight: bold;
+    }
+    #login-container input[type="text"],
+    #login-container input[type="password"] {
+        width: calc(100% - 20px);
+        padding: 12px 10px;
+        border: 1px solid #006600;
+        border-radius: 5px;
+        background-color: #002200;
+        color: #fff;
+        font-size: 1em;
+        box-sizing: border-box;
+    }
+    #login-container input[type="text"]:focus,
+    #login-container input[type="password"]:focus {
+        outline: none;
+        border-color: #00cc88;
+        box-shadow: 0 0 0 2px rgba(0, 204, 136, 0.3);
+    }
+    #login-container button {
+        width: 100%;
+        padding: 15px;
+        background-color: #00cc88;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    #login-container button:hover {
+        background-color: #00aa66;
+    }
+    #login-container #error-message {
+        color: #ff6666;
+        margin-top: 15px;
+        font-weight: bold;
+        display: none;
+    }
+</style>
+</head>
+<body>
+    <div id="login-container">
+        <h2>Login Kasir</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+            <p id="error-message"></p>
+        </form>
+    </div>
+
+    <div id="app-content" style="display: none;">
+        <header>
+            <h1>Kasir Warung Degan Bakar Rempah</h1>
+            <p>Manajemen Pesanan</p>
+            <button id="logout-button" class="btn-logout">Logout</button>
+        </header>
+
+        <main>
+            <section id="current-orders">
+                <h2>Daftar Pesanan</h2>
+                <div id="orders-list">
+                    <p style="text-align: center; color: #c9f1b8;" id="loading-message">Memuat pesanan...</p>
+                </div>
+            </section>
+        </main>
+
+        <div id="receipt-print-area">
+            <pre id="receipt-content"></pre>
+        </div>
+    </div>
+
+
+<script>
+    const socket = io();
+    const ordersListDiv = document.getElementById('orders-list');
+    const loadingMessage = document.getElementById('loading-message');
+    const logoutButton = document.getElementById('logout-button');
+
+    // Login related elements
+    const loginContainer = document.getElementById('login-container');
+    const loginForm = document.getElementById('login-form');
+    const loginErrorMessage = document.getElementById('error-message');
+    const appContent = document.getElementById('app-content');
+
+    // Functions to show/hide login and app content
+    function showLogin() {
+        loginContainer.style.display = 'block';
+        appContent.style.display = 'none';
+    }
+
+    function showApp() {
+        loginContainer.style.display = 'none';
+        appContent.style.display = 'block';
+        fetchOrders(); // Load orders after successful login
+    }
+
+    // Check login status on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+            showApp();
+        } else {
+            showLogin();
+        }
+    });
+
+    // Handle login form submission
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const username = loginForm.username.value;
+        const password = loginForm.password.value;
+
+        try {
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                sessionStorage.setItem('loggedIn', 'true'); // Store login status
+                showApp(); // Show app content
+                loginForm.reset(); // Clear form
+                loginErrorMessage.style.display = 'none';
+            } else {
+                loginErrorMessage.textContent = data.message || 'Login gagal. Silakan coba lagi.';
+                loginErrorMessage.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            loginErrorMessage.textContent = 'Terjadi kesalahan jaringan atau server. Silakan coba lagi.';
+            loginErrorMessage.style.display = 'block';
+        }
+    });
+
+    // Handle logout
+    logoutButton.addEventListener('click', () => {
+        sessionStorage.removeItem('loggedIn'); // Clear login status
+        showLogin(); // Show login form
+    });
+
+
+    // --- Core Functions for Order Management ---
+
+    async function fetchOrders() {
+        loadingMessage.style.display = 'block';
+        try {
+            const response = await fetch('http://localhost:3000/orders', {
+                headers: {
+                    'X-Logged-In': 'true' // Send auth header
+                }
+            });
+            if (!response.ok) {
+                if (response.status === 401) {
+                    sessionStorage.removeItem('loggedIn');
+                    alert('Sesi Anda telah berakhir atau akses tidak sah. Silakan login kembali.');
+                    showLogin();
+                    return;
+                }
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const orders = await response.json();
+            console.log('Pesanan diterima:', orders);
+
+            ordersListDiv.innerHTML = '';
+
+            if (orders.length === 0) {
+                ordersListDiv.innerHTML = '<p style="text-align: center; color: #c9f1b8;">Belum ada pesanan.</p>';
+            } else {
+                orders.forEach(order => {
+                    const orderCard = document.createElement('div');
+                    orderCard.className = 'order-card';
+                    orderCard.setAttribute('data-order-id', order.id);
+
+                    // --- START: PERBAIKAN WAKTU YANG LEBIH AKURAT ---
+                    const orderDateFromDB = new Date(order.order_date); // Membuat objek Date dari string DB
+                    
+                    // Membuat formatter untuk WIB
+                    const formatter = new Intl.DateTimeFormat('id-ID', {
+                        year: 'numeric',
+                        month: '2-digit', // Pastikan 2 digit (07, bukan 7)
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false, // Format 24 jam
+                        timeZone: 'Asia/Jakarta' // Penting: Tentukan zona waktu WIB
+                    });
+                    const formattedOrderDate = formatter.format(orderDateFromDB);
+                    // --- END: PERBAIKAN WAKTU YANG LEBIH AKURAT ---
+
+                    let itemsHtml = '<ul class="order-items-list">';
+                    if (order.items && order.items.length > 0) {
+                        order.items.forEach(item => {
+                            const notes = item.notes ? ` (Catatan: ${item.notes})` : '';
+                            itemsHtml += `<li><span>${item.item_name}</span> x${item.quantity} ${notes}</li>`;
+                        });
+                    } else {
+                        itemsHtml += `<li>${order.items_summary || 'Tidak ada detail item.'}</li>`;
+                    }
+                    itemsHtml += '</ul>';
+
+                    let paymentProofLink = '';
+                    if (order.bukti_transfer) {
+                        paymentProofLink = `<a href="http://localhost:3000${order.bukti_transfer}" target="_blank" class="proof-link">Lihat Bukti Transfer</a>`;
+                    }
+
+                    orderCard.innerHTML = `
+                        <h3>Pesanan #${order.id} <span>(${formattedOrderDate})</span></h3>
+                        <p><strong>Pelanggan:</strong> ${order.customer_name}</p>
+                        <p><strong>Meja:</strong> ${order.table_number || '-'}</p>
+                        <p><strong>Metode Bayar:</strong> ${order.payment_method.toUpperCase()}</p>
+                        <p><strong>Status:</strong> <span id="status-${order.id}">${order.status}</span></p>
+                        <div class="order-items-container">
+                            <h4>Detail Pesanan:</h4>
+                            ${itemsHtml}
+                        </div>
+                        <p class="total-price">Total: Rp ${order.total_price.toLocaleString('id-ID')}</p>
+                        ${paymentProofLink}
+                        <div class="order-actions">
+                            <select id="status-select-${order.id}" class="status-dropdown">
+                                <option value="Menunggu Pembayaran" ${order.status === 'Menunggu Pembayaran' ? 'selected' : ''}>Menunggu Pembayaran</option>
+                                <option value="Menunggu Konfirmasi" ${order.status === 'Menunggu Konfirmasi' ? 'selected' : ''}>Menunggu Konfirmasi</option>
+                                <option value="Diproses" ${order.status === 'Diproses' ? 'selected' : ''}>Diproses</option>
+                                <option value="Selesai" ${order.status === 'Selesai' ? 'selected' : ''}>Selesai</option>
+                                <option value="Dibatalkan" ${order.status === 'Dibatalkan' ? 'selected' : ''}>Dibatalkan</option>
+                            </select>
+                            <button class="btn-update" onclick="updateOrderStatus(${order.id})">Update Status</button>
+                            <button class="btn-print" onclick="printReceipt(${order.id})">Cetak Struk</button>
+                        </div>
+                    `;
+                    ordersListDiv.appendChild(orderCard);
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+            if (error.message !== 'HTTP error! status: 401') {
+                ordersListDiv.innerHTML = '<p style="text-align: center; color: red;">Gagal memuat pesanan. Cek koneksi server.</p>';
+            }
+        } finally {
+            loadingMessage.style.display = 'none';
+        }
+    }
+
+    async function updateOrderStatus(orderId) {
+        const selectElement = document.getElementById(`status-select-${orderId}`);
+        const newStatus = selectElement.value;
+
+        try {
+            const response = await fetch(`http://localhost:3000/update-status/${orderId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Logged-In': 'true' // Send auth header
+                },
+                body: JSON.stringify({ newStatus: newStatus })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log(data.message);
+                document.getElementById(`status-${orderId}`).textContent = newStatus;
+                alert('Status pesanan berhasil diperbarui!');
+            } else {
+                if (response.status === 401) {
+                    sessionStorage.removeItem('loggedIn');
+                    alert('Sesi Anda telah berakhir atau akses tidak sah. Silakan login kembali.');
+                    showLogin();
+                } else {
+                    alert('Gagal memperbarui status: ' + data.message);
+                }
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+            alert('Terjadi kesalahan saat memperbarui status.');
+        }
+    }
+
+    // --- FUNGSI CETAK STRUK (VERSI BARU - Buka Jendela Baru) ---
+    function centerText(text, width = 40) {
+        const padding = Math.max(0, width - text.length);
+        const leftPadding = Math.floor(padding / 2);
+        return ' '.repeat(leftPadding) + text;
+    }
+
+    function leftRightText(left, right, width = 40) {
+        const leftStr = String(left || '').trim();
+        const rightStr = String(right || '').trim();
+        const remainingSpace = width - leftStr.length - rightStr.length;
+        const spaceBetween = ' '.repeat(Math.max(0, remainingSpace));
+        return leftStr + spaceBetween + rightStr;
+    }
+
+    async function printReceipt(orderId) {
+        console.log('--- Memulai fungsi printReceipt (NEW METHOD) untuk Order ID:', orderId, '---');
+        try {
+            console.log('Langkah 1: Mengambil detail pesanan untuk ID:', orderId);
+            const orderResponse = await fetch(`http://localhost:3000/order/${orderId}`, {
+                headers: { 'X-Logged-In': 'true' }
+            });
+
+            if (!orderResponse.ok) {
+                if (orderResponse.status === 401) {
+                    sessionStorage.removeItem('loggedIn');
+                    alert('Sesi Anda telah berakhir atau akses tidak sah. Silakan login kembali.');
+                    showLogin();
+                    return;
+                }
+                throw new Error(`HTTP error! status: ${orderResponse.status} - ${orderResponse.statusText}`);
+            }
+
+            const order = await orderResponse.json();
+            console.log('Langkah 2: Data pesanan berhasil diambil:', order);
+            if (!order || Object.keys(order).length === 0) {
+                alert('Gagal mencetak: Detail pesanan tidak ditemukan atau kosong.');
+                console.warn('Detail pesanan hilang atau kosong. Pembatalan cetak.');
+                return;
+            }
+
+            console.log('Langkah 3: Mengambil item pesanan untuk Order ID:', orderId);
+            const itemsResponse = await fetch(`http://localhost:3000/order-items/${orderId}`, {
+                headers: { 'X-Logged-In': 'true' }
+            });
+
+            if (!itemsResponse.ok) {
+                if (itemsResponse.status === 401) {
+                    sessionStorage.removeItem('loggedIn');
+                    alert('Sesi Anda telah berakhir atau akses tidak sah. Silakan login kembali.');
+                    showLogin();
+                    return;
+                }
+                throw new Error(`HTTP error! status: ${itemsResponse.status} - ${itemsResponse.statusText}`);
+            }
+
+            const items = await itemsResponse.json();
+            console.log('Langkah 4: Item pesanan berhasil diambil:', items);
+
+            order.items = items;
+
+            if (!order.items || order.items.length === 0) {
+                alert('Gagal mencetak: Detail item pesanan tidak ditemukan atau item kosong.');
+                console.warn('Item pesanan hilang atau kosong. Pembatalan cetak.');
+                return;
+            }
+
+            let strukContent = "";
+            const strukWidth = 40;
+
+            // --- START: PERBAIKAN WAKTU DI STRUK CETAK YANG LEBIH AKURAT ---
+            const receiptDateFromDB = new Date(order.order_date);
+            const receiptFormatter = new Intl.DateTimeFormat('id-ID', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+                timeZone: 'Asia/Jakarta'
+            });
+            const formattedReceiptDate = receiptFormatter.format(receiptDateFromDB);
+            // --- END: PERBAIKAN WAKTU DI STRUK CETAK YANG LEBIH AKURAT ---
+
+
+            strukContent += centerText("--- WARUNG DEGAN BAKAR ---", strukWidth) + "\n";
+            strukContent += centerText("Jl. Terusan Sulfat No.5, Pandanwangi,", strukWidth) + "\n";
+            strukContent += centerText("Kec. Blimbing, Kota Malang, Jatim 65122", strukWidth) + "\n";
+            strukContent += centerText("Telp: 089515299239", strukWidth) + "\n";
+            strukContent += centerText("----------------------------------------", strukWidth) + "\n";
+            strukContent += `Tanggal: ${formattedReceiptDate}\n`; // Menggunakan variabel yang sudah diformat
+            strukContent += `Pesanan ID: #${order.id}\n`;
+            strukContent += `Pelanggan: ${order.customer_name}\n`;
+            strukContent += `Meja: ${order.table_number || '-'}\n`;
+            strukContent += centerText("----------------------------------------", strukWidth) + "\n";
+
+            order.items.forEach(item => {
+                const itemName = item.item_name || 'Item Tidak Diketahui';
+                const quantity = item.quantity || 0;
+                const price = item.price || 0;
+                const itemTotalPrice = quantity * price;
+
+                strukContent += leftRightText(`${itemName} x${quantity}`, `Rp ${itemTotalPrice.toLocaleString('id-ID')}`, strukWidth) + "\n";
+                if (item.notes) {
+                    strukContent += `   Catatan: ${item.notes}\n`;
+                }
+            });
+
+            strukContent += centerText("----------------------------------------", strukWidth) + "\n";
+            strukContent += leftRightText("Total Pembayaran:", `Rp ${order.total_price.toLocaleString('id-ID')}`, strukWidth) + "\n";
+            strukContent += `Metode Bayar: ${order.payment_method ? order.payment_method.toUpperCase() : 'N/A'}\n`;
+            strukContent += `Status: ${order.status ? order.status : 'N/A'}\n`;
+            strukContent += centerText("----------------------------------------", strukWidth) + "\n";
+            strukContent += centerText("Terima Kasih Atas Kunjungan Anda!", strukWidth) + "\n";
+            strukContent += centerText("Kami Tunggu Kedatangan Anda Kembali", strukWidth) + "\n";
+            strukContent += "\n\n\n";
+
+            console.log('Langkah 5: Konten struk yang dihasilkan:\n', strukContent);
+            console.log('Langkah 6: Konten struk siap untuk dicetak di jendela baru.');
+
+            // --- BAGIAN BARU UNTUK MENCETAK KE JENDELA BARU ---
+            const printWindow = window.open('', '_blank', 'width=300,height=500'); // Ukuran jendela bisa disesuaikan
+            if (!printWindow) {
+                alert('Pop-up blocker mungkin memblokir jendela cetak. Izinkan pop-up untuk situs ini.');
+                return;
+            }
+
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Struk Pesanan #${order.id}</title>
+                    <style>
+                        body {
+                            font-family: 'Consolas', 'Courier New', monospace;
+                            font-size: 10px;
+                            margin: 0;
+                            padding: 5mm; /* Padding untuk memberi ruang di pinggir kertas */
+                            color: black;
+                            background-color: white;
+                            width: 80mm; /* Lebar kertas struk, printer 58mm akan menskala */
+                            box-sizing: border-box; /* Pastikan padding masuk dalam lebar */
+                        }
+                        pre {
+                            white-space: pre-wrap; /* Mengatasi jika teks terlalu panjang */
+                            word-wrap: break-word;
+                            margin: 0;
+                            padding: 0;
+                            line-height: 1.2;
+                        }
+                        @page {
+                            size: auto; /* Agar printer menentukan ukuran halaman */
+                            margin: 0; /* Menghilangkan margin default browser */
+                        }
+                    </style>
+                </head>
+                <body>
+                    <pre>${strukContent}</pre>
+                    <script>
+                        // Tunggu hingga konten dimuat sepenuhnya sebelum mencetak
+                        window.onload = function() {
+                            setTimeout(function() { // Beri sedikit waktu tambahan untuk render
+                                window.print();
+                                window.onafterprint = function() {
+                                    window.close(); // Tutup jendela setelah cetak atau ketika dialog cetak ditutup
+                                };
+                            }, 500); // 500ms delay
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close(); // Penting: Tutup dokumen untuk memastikan konten dirender
+
+            console.log('Langkah 7: Jendela cetak baru dibuka dan konten dimasukkan.');
+            // printWindow.print() akan dipanggil dari dalam jendela baru menggunakan window.onload
+            console.log("--- Cetak Struk Selesai (diproses oleh jendela baru) ---");
+
+        } catch (error) {
+            console.error('Kesalahan saat mencetak struk:', error);
+            if (!error.message.includes('401')) {
+                alert('Terjadi kesalahan yang tidak terduga saat mencetak struk. Cek console untuk detail.');
+            }
+        }
+    }
+
+
+    // --- Socket.IO Event Listeners ---
+    socket.on('pesanan-baru', (newOrder) => {
+        console.log('Pesanan baru diterima via Socket.IO:', newOrder);
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+            fetchOrders();
+        }
+    });
+
+    socket.on('status-update', (data) => {
+        console.log('Status pesanan diperbarui via Socket.IO:', data);
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+            fetchOrders();
+        }
+    });
+
+    socket.on('bukti-transfer-uploaded', (data) => {
+        console.log('Bukti transfer diunggah untuk pesanan:', data.orderId);
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+            fetchOrders();
+        }
+    });
+</script>
+</body>
+</html>
