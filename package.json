@@ -1,0 +1,20 @@
+{
+  "name": "warung-degan-server",
+  "version": "1.0.0",
+  "description": "Backend for Warung Degan Bakar Rempah",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "multer": "^2.0.1",
+    "path": "^0.12.7",
+    "socket.io": "^4.8.1",
+    "sqlite3": "^5.1.7"
+  }
+}
