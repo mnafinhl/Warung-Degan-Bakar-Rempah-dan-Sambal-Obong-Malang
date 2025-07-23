@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warung Degan Bakar Rempah & Sambal Obong Malang</title>
+    <style>
+        /* CSS umum untuk seluruh halaman */
+        body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #003300; /* Dark green background */
+        color: #fff;
+        line-height: 1.6;
+        padding: 20px;
+        }
+        header {
+            background-color: #004d00; /* Darker green for header */
+            color: #f9d923; /* Yellowish accent for text */
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex; /* Untuk menata elemen di header */
+            justify-content: space-between; /* Menjauhkan judul dan tombol logout */
+            align-items: center;
+        }
+        header h1 {
+            font-size: 28px;
+            margin: 0;
+            flex-grow: 1; /* Mengisi ruang yang tersedia */
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.1em;
+            color: #c9f1b8; /* Lighter green accent */
+        }
+        h2 {
+            color: #f9d923; /* Yellowish accent for headings */
+            margin-top: 0;
+            border-bottom: 2px solid #00cc88;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background-color: #1e451e; /* Hijau gelap lebih terang dari body */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border: 1px solid #2e6b2e;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        /* Gaya untuk kategori menu (seperti Degan Bakar, Degan Utuh) */
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #3c8f3c;
+            border-radius: 8px;
+            background-color: #2e6b2e;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .daftar-menu-title {
+            font-size: 1.8em;
+            color: #a2cd48;
+            border-bottom: 2px solid #a2cd48;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .menu-item {
+            border: 1px solid #3c8f3c; /* Border item menu */
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            background-color: #2e6b2e; /* Background item menu */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer; /* Menandakan item bisa diklik */
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-item img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #4CAF50; /* Border gambar */
+        }
+
+        .menu-item .item-title {
+            color: #e0f0e0; /* Judul item menu */
+            margin-top: 0;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .menu-item .item-price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #a2cd48; /* Harga - Hijau lime terang */
+            margin-bottom: 15px;
+        }
+
+        /* Keranjang Belanja */
+        #cart-section {
+            background-color: #2e6b2e; /* Latar belakang keranjang */
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+            border: 1px solid #3c8f3c;
+        }
+
+        #customer-info {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #4CAF50;
+        }
+
+        #customer-info label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #d0f0d0;
+        }
+
+        #customer-info input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            background-color: #1a321a; /* Input background */
+            color: white;
+            font-size: 1em;
+        }
+        #customer-info input[type="text"]::placeholder {
+            color: #a0a0a0;
+        }
+
+        #cart-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #cart-items li {
+            display: flex;
+            flex-wrap: wrap; /* Mengizinkan wrap untuk catatan */
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #4CAF50; /* Garis pemisah item keranjang */
+            color: #e0f0e0; /* Teks item keranjang */
+        }
+
+        #cart-items li:last-child {
+            border-bottom: none;
+        }
+
+        #cart-items li .item-details {
+            flex-grow: 1; /* Agar detail item mengambil ruang yang tersedia */
+        }
+
+        #cart-items li .item-actions {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        #cart-items li .item-note {
+            width: 100%; /* Catatan mengambil lebar penuh */
+            font-size: 0.85em;
+            color: #b0d0b0;
+            margin-top: 5px;
+            padding-left: 10px; /* Indentasi catatan */
+            font-style: italic;
+        }
+
+        .remove-item {
+            background-color: #c0392b; /* Merah untuk hapus */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background-color 0.3s ease;
+        }
+        
+        .remove-item:hover {
+            background-color: #a32d21;
+        }
+
+        #cart-total {
+            text-align: right;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #a2cd48; /* Total harga - Hijau lime terang */
+        }
+
+        /* Tombol Checkout menjadi pilihan pembayaran */
+        .checkout-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .checkout-buttons button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: white; /* Teks tombol putih */
+        }
+
+        .checkout-buttons .btn-qris {
+            background-color: #4CAF50; /* Hijau - untuk QRIS */
+        }
+        .checkout-buttons .btn-qris:hover {
+            background-color: #388E3C;
+        }
+
+        .checkout-buttons .btn-cash {
+            background-color: #8e44ad; /* Ungu - untuk Tunai */
+        }
+        .checkout-buttons .btn-cash:hover {
+            background-color: #6c3483;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #d0d0d0; /* Teks footer */
+            font-size: 0.9em;
+            border-top: 1px solid #2e6b2e;
+        }
+
+        /* Overlay dan Popup Umum */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000; /* Z-index untuk overlay */
+            display: none; /* Default hidden */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup {
+            position: fixed; /* Penting: agar pop-up tetap di atas layar */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Memposisikan di tengah */
+            background: #2e6b2e; /* Warna latar belakang pop-up (hijau gelap) */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            z-index: 1001; /* Z-index lebih tinggi dari overlay */
+            display: none; /* Default hidden */
+            max-width: 400px;
+            width: 90%;
+            animation: fadeIn 0.3s ease-out;
+            color: white;
+            border: 1px solid #3c8f3c; /* Border untuk pop-up */
+            overflow: hidden; /* Penting untuk header yang meluap */
+        }
+        
+        .popup .popup-header {
+            background-color: #4CAF50; /* Warna hijau terang untuk header */
+            padding: 15px 20px;
+            margin-bottom: 20px; /* Jarak antara header dan konten */
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .popup .popup-content-body {
+            padding: 0 30px 30px 30px; /* Padding untuk konten body pop-up */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9) translate(-50%, -50%); }
+            to { opacity: 1; transform: scale(1) translate(-50%, -50%); }
+        }
+
+        #popup-note h3 {
+            margin-top: 0;
+            color: #a2cd48; /* Heading popup catatan */
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        #qrcode-image {
+            width: 250px;
+            height: 250px;
+            border: 2px solid #a2cd48; /* Border QRIS */
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #qris-info {
+            font-size: 1.1em;
+            color: #d0f0d0; /* Info di popup */
+            margin-bottom: 25px;
+        }
+
+        /* Upload Bukti Pembayaran */
+        .upload-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #4CAF50;
+            text-align: left;
+        }
+        .upload-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #d0f0d0;
+        }
+        .upload-section input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            background-color: #1a321a;
+            color: white;
+            font-size: 0.9em;
+            box-sizing: border-box; /* Include padding in width */
+        }
+        .upload-section input[type="file"]::file-selector-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .upload-section input[type="file"]::file-selector-button:hover {
+            background-color: #388E3C;
+        }
+        
+        #upload-status {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #a2cd48;
+        }
+
+        /* Tombol-tombol di dalam pop-up */
+        .popup button {
+            background-color: #4CAF50; /* Tombol umum */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            width: 100%; /* Tombol penuh lebar di pop-up */
+            box-sizing: border-box;
+        }
+        .popup button.confirm-btn {
+            background-color: #27ae60; /* Lebih hijau untuk konfirmasi */
+            margin-top: 20px; /* Jarak lebih jauh dari input file */
+        }
+        .popup button.close-btn {
+            background-color: #6c757d; /* Abu-abu untuk tutup umum */
+        }
+
+        .popup button:hover {
+            background-color: #388E3C;
+        }
+        .popup button.confirm-btn:hover {
+            background-color: #229954;
+        }
+        .popup button.close-btn:hover {
+            background-color: #5a6268;
+        }
+
+        #note-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            background-color: #1a321a;
+            color: white;
+            font-size: 1em;
+            height: 80px; /* Tinggi textarea */
+            resize: vertical; /* Memungkinkan resize vertikal */
+        }
+
+        /* Responsif */
+        @media (max-width: 768px) {
+            .menu {
+                grid-template-columns: 1fr;
+            }
+            body {
+                padding: 10px;
+            }
+            .checkout-buttons button {
+                font-size: 1em;
+                padding: 12px;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            #qrcode-image {
+                width: 200px;
+                height: 200px;
+            }
+            .popup {
+                padding: 0; /* Padding dihilangkan karena ada padding di .popup-content-body */
+                max-width: 350px; /* Ukuran yang lebih sesuai untuk mobile */
+            }
+            .popup .popup-content-body {
+                padding: 15px; /* Padding mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Warung Degan Bakar Rempah & Sambal Obong Malang</h1>
+        <p>"Sensasi Nikmat Degan Bakar yang Menggugah Selera!"</p>
+    </header>
+
+    <div class="container">
+        <section id="menu">
+            <h2>Daftar Menu</h2>
+            <div class="section"> 
+                <div class="daftar-menu-title">Degan Bakar</div> 
+                <div class="menu-grid menu"> 
+                    <div class="menu-item" data-name="Degan Bakar Ori (Tanpa Gula)" data-price="20000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Bakar+Ori" alt="Gambar Degan Bakar Ori (Tanpa Gula)" />
+                        <div class="item-title">Degan Bakar Ori (Tanpa Gula)</div>
+                        <div class="item-price">Rp 20.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Bakar Ori + Gula" data-price="21000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Bakar+Gula" alt="Gambar Degan Bakar Ori + Gula" />
+                        <div class="item-title">Degan Bakar Ori + Gula</div>
+                        <div class="item-price">Rp 21.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Bakar Ori + Gula + Jeruk Nipis" data-price="22000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Bakar+Gula+Jeruk" alt="Gambar Degan Bakar Ori + Gula + Jeruk Nipis" />
+                        <div class="item-title">Degan Bakar Ori + Gula + Jeruk Nipis</div>
+                        <div class="item-price">Rp 22.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Bakar Ori + Madu" data-price="25000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Bakar+Madu" alt="Gambar Degan Bakar Ori + Madu" />
+                        <div class="item-title">Degan Bakar Ori + Madu</div>
+                        <div class="item-price">Rp 25.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Bakar Rempah Lengkap" data-price="26000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Bakar+Rempah" alt="Gambar Degan Bakar Rempah Lengkap" />
+                        <div class="item-title">Degan Bakar Rempah Lengkap</div>
+                        <div class="item-price">Rp 26.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Bakar Rempah Lengkap + Madu" data-price="30000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Bakar+Rempah+Madu" alt="Gambar Degan Bakar Rempah Lengkap + Madu" />
+                        <div class="item-title">Degan Bakar Rempah Lengkap + Madu</div>
+                        <div class="item-price">Rp 30.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Bakar Rempah JJS (Jahe Jeruk Sereh)" data-price="24000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Bakar+JJS" alt="Gambar Degan Bakar Rempah JJS (Jahe Jeruk Sereh)" />
+                        <div class="item-title">Degan Bakar Rempah JJS (Jahe Jeruk Sereh)</div>
+                        <div class="item-price">Rp 24.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Bakar Rempah JJS (Jahe Jeruk Sereh) + Madu" data-price="29000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Bakar+JJS+Madu" alt="Gambar Degan Bakar Rempah JJS (Jahe Jeruk Sereh) + Madu" />
+                        <div class="item-title">Degan Bakar Rempah JJS (Jahe Jeruk Sereh) + Madu</div>
+                        <div class="item-price">Rp 29.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Bakar Kunyit + Madu + Jeruk Nipis" data-price="29000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Bakar+Kunyit" alt="Gambar Degan Bakar Kunyit + Madu + Jeruk Nipis" />
+                        <div class="item-title">Degan Bakar Kunyit + Madu + Jeruk Nipis</div>
+                        <div class="item-price">Rp 29.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Ijo Bakar Ori" data-price="28000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Ijo+Bakar+Ori" alt="Gambar Degan Ijo Bakar Ori" />
+                        <div class="item-title">Degan Ijo Bakar Ori</div>
+                        <div class="item-price">Rp 28.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Ijo Bakar Rempah" data-price="33000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Ijo+Bakar+Rempah" alt="Gambar Degan Ijo Bakar Rempah" />
+                        <div class="item-title">Degan Ijo Bakar Rempah</div>
+                        <div class="item-price">Rp 33.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Ijo Bakar Rempah + Madu" data-price="38000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Ijo+Bakar+Rempah+Madu" alt="Gambar Degan Ijo Bakar Rempah + Madu" />
+                        <div class="item-title">Degan Ijo Bakar Rempah + Madu</div>
+                        <div class="item-price">Rp 38.000</div>
+                    </div>
+                </div> 
+            </div> 
+
+            <div class="section"> 
+                <div class="daftar-menu-title">Degan Utuh</div> 
+                <div class="menu-grid menu"> 
+                    <div class="menu-item" data-name="Degan Biasa Utuh" data-price="12000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Biasa+Utuh" alt="Gambar Degan Biasa Utuh" />
+                        <div class="item-title">Degan Biasa Utuh</div>
+                        <div class="item-price">Rp 12.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Ijo Jamu Kecil" data-price="15000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Ijo+Jamu+Kecil" alt="Gambar Degan Ijo Jamu Kecil" />
+                        <div class="item-title">Degan Ijo Jamu Kecil</div>
+                        <div class="item-price">Rp 15.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Ijo Jamu Sedang" data-price="18000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Ijo+Jamu+Sedang" alt="Gambar Degan Ijo Jamu Sedang" />
+                        <div class="item-title">Degan Ijo Jamu Sedang</div>
+                        <div class="item-price">Rp 18.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Ijo Jamu Besar" data-price="20000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Ijo+Jamu+Besar" alt="Gambar Degan Ijo Jamu Besar" />
+                        <div class="item-title">Degan Ijo Jamu Besar</div>
+                        <div class="item-price">Rp 20.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Ijo Jamu Super" data-price="22000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Ijo+Jamu+Super" alt="Gambar Degan Ijo Jamu Super" />
+                        <div class="item-title">Degan Ijo Jamu Super</div>
+                        <div class="item-price">Rp 22.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Degan Ijo Jamu Jumbo" data-price="25000">
+                        <img src="https://via.placeholder.com/300x180?text=Degan+Ijo+Jamu+Jumbo" alt="Gambar Degan Ijo Jamu Jumbo" />
+                        <div class="item-title">Degan Ijo Jamu Jumbo</div>
+                        <div class="item-price">Rp 25.000</div>
+                    </div>
+                </div> 
+            </div> 
+
+            <div class="section"> 
+                <div class="daftar-menu-title">Degan Kemasan Cup</div> 
+                <div class="menu-grid menu"> 
+                    <div class="menu-item" data-name="Es Degan + Susu" data-price="8000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Degan+Susu" alt="Gambar Es Degan + Susu" />
+                        <div class="item-title">Es Degan + Susu</div>
+                        <div class="item-price">Rp 8.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Es Degan Cocopandan Tanpa Susu" data-price="10000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Degan+Cocopandan" alt="Gambar Es Degan Cocopandan Tanpa Susu" />
+                        <div class="item-title">Es Degan Cocopandan Tanpa Susu</div>
+                        <div class="item-price">Rp 10.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Es Degan Cocopandan Milk" data-price="10000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Degan+Cocopandan+Milk" alt="Gambar Es Degan Cocopandan Milk" />
+                        <div class="item-title">Es Degan Cocopandan Milk</div>
+                        <div class="item-price">Rp 10.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Es Degan Melon Milk" data-price="10000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Degan+Melon+Milk" alt="Gambar Es Degan Melon Milk" />
+                        <div class="item-title">Es Degan Melon Milk</div>
+                        <div class="item-price">Rp 10.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Es Degan Jambu Milk" data-price="10000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Degan+Jambu+Milk" alt="Gambar Es Degan Jambu Milk" />
+                        <div class="item-title">Es Degan Jambu Milk</div>
+                        <div class="item-price">Rp 10.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Es Degan Sirsak Milk" data-price="10000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Degan+Sirsak+Milk" alt="Gambar Es Degan Sirsak Milk" />
+                        <div class="item-title">Es Degan Sirsak Milk</div>
+                        <div class="item-price">Rp 10.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Es Degan + Madu" data-price="12000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Degan+Madu" alt="Gambar Es Degan + Madu" />
+                        <div class="item-title">Es Degan + Madu</div>
+                        <div class="item-price">Rp 12.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Es Degan + Madu + Jeruk" data-price="12000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Degan+Madu+Jeruk" alt="Gambar Es Degan + Madu + Jeruk" />
+                        <div class="item-title">Es Degan + Madu + Jeruk</div>
+                        <div class="item-price">Rp 12.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Es Degan + Durian + Susu" data-price="15000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Degan+Durian+Susu" alt="Gambar Es Degan + Durian + Susu" />
+                        <div class="item-title">Es Degan + Durian + Susu</div>
+                        <div class="item-price">Rp 15.000</div>
+                    </div>
+                </div> 
+            </div> 
+
+            <div class="section"> 
+                <div class="daftar-menu-title">Minuman Lain</div> 
+                <div class="menu-grid menu"> 
+                    <div class="menu-item" data-name="Teh Hangat" data-price="5000">
+                        <img src="https://via.placeholder.com/300x180?text=Teh+Hangat" alt="Gambar Teh Hangat" />
+                        <div class="item-title">Teh Hangat</div>
+                        <div class="item-price">Rp 5.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Es Teh" data-price="5000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Teh" alt="Gambar Es Teh" />
+                        <div class="item-title">Es Teh</div>
+                        <div class="item-price">Rp 5.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Es Teh Tarik" data-price="8000">
+                        <img src="https://via.placeholder.com/300x180?text=Es+Teh+Tarik" alt="Gambar Es Teh Tarik" />
+                        <div class="item-title">Es Teh Tarik</div>
+                        <div class="item-price">Rp 8.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Kopi" data-price="8000">
+                        <img src="https://via.placeholder.com/300x180?text=Kopi" alt="Gambar Kopi" />
+                        <div class="item-title">Kopi</div>
+                        <div class="item-price">Rp 8.000</div>
+                    </div>
+                </div> 
+            </div> 
+
+            <div class="section"> 
+                <div class="daftar-menu-title">Minuman Serba 7 Ribu</div> 
+                <div class="menu-grid menu"> 
+                    <div class="menu-item" data-name="Creamy Cappucino" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Creamy+Cappucino" alt="Gambar Creamy Cappucino" />
+                        <div class="item-title">Creamy Cappucino</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Creamy Taro" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Creamy+Taro" alt="Gambar Creamy Taro" />
+                        <div class="item-title">Creamy Taro</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Creamy Vanilla Latte" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Creamy+Vanilla+Latte" alt="Gambar Creamy Vanilla Latte" />
+                        <div class="item-title">Creamy Vanilla Latte</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Creamy Avocado" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Creamy+Avocado" alt="Gambar Creamy Avocado" />
+                        <div class="item-title">Creamy Avocado</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Creamy Choco Cheese" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Creamy+Choco+Cheese" alt="Gambar Creamy Choco Cheese" />
+                        <div class="item-title">Creamy Choco Cheese</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Creamy Strawberry" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Creamy+Strawberry" alt="Gambar Creamy Strawberry" />
+                        <div class="item-title">Creamy Strawberry</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Creamy Choco Cookies" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Creamy+Choco+Cookies" alt="Gambar Creamy Choco Cookies" />
+                        <div class="item-title">Creamy Choco Cookies</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                </div> 
+            </div> 
+
+            <div class="section"> 
+                <div class="daftar-menu-title">Camilan</div> 
+                <div class="menu-grid menu"> 
+                    <div class="menu-item" data-name="Bola-bola Singkong Isi 5" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Bola-bola+Singkong" alt="Gambar Bola-bola Singkong Isi 5" />
+                        <div class="item-title">Bola-bola Singkong Isi 5</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Bola-bola Singkong Isi 10" data-price="12000">
+                        <img src="https://via.placeholder.com/300x180?text=Bola-bola+Singkong" alt="Gambar Bola-bola Singkong Isi 10" />
+                        <div class="item-title">Bola-bola Singkong Isi 10</div>
+                        <div class="item-price">Rp 12.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Singkong Goreng Mekar" data-price="5000">
+                        <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0083.jpg" alt="Gambar Singkong Goreng Mekar" />
+                        <div class="item-title">Singkong Goreng Mekar</div>
+                        <div class="item-price">Rp 5.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Tahu Crispy Original" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Tahu+Crispy+Original" alt="Gambar Tahu Crispy Original" />
+                        <div class="item-title">Tahu Crispy Original</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Tahu Crispy Balado" data-price="8000">
+                        <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0087.jpg" alt="Gambar Tahu Crispy Balado" />
+                        <div class="item-title">Tahu Crispy Balado</div>
+                        <div class="item-price">Rp 8.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Tahu Crispy Keju" data-price="8000">
+                        <img src="https://via.placeholder.com/300x180?text=Tahu+Crispy+Keju" alt="Gambar Tahu Crispy Keju" />
+                        <div class="item-title">Tahu Crispy Keju</div>
+                        <div class="item-price">Rp 8.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Tahu Crispy BBQ" data-price="8000">
+                        <img src="https://via.placeholder.com/300x180?text=Tahu+Crispy+BBQ" alt="Gambar Tahu Crispy BBQ" />
+                        <div class="item-title">Tahu Crispy BBQ</div>
+                        <div class="item-price">Rp 8.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Tahu Gila Pedas" data-price="9000">
+                        <img src="https://via.placeholder.com/300x180?text=Tahu+Gila+Pedas" alt="Gambar Tahu Gila Pedas" />
+                        <div class="item-title">Tahu Gila Pedas</div>
+                        <div class="item-price">Rp 9.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Onion Ring" data-price="12000">
+                        <img src="https://via.placeholder.com/300x180?text=Onion+Ring" alt="Gambar Onion Ring" />
+                        <div class="item-title">Onion Ring</div>
+                        <div class="item-price">Rp 12.000</div>
+                    </div>
+                    <div class="menu-item" data-name="French Fries Original" data-price="12000">
+                        <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0085.jpg" alt="Gambar French Fries Original" />
+                        <div class="item-title">French Fries Original</div>
+                        <div class="item-price">Rp 12.000</div>
+                    </div>
+                    <div class="menu-item" data-name="French Fries Keju" data-price="13000">
+                        <img src="https://via.placeholder.com/300x180?text=French+Fries+Keju" alt="Gambar French Fries Keju" />
+                        <div class="item-title">French Fries Keju</div>
+                        <div class="item-price">Rp 13.000</div>
+                    </div>
+                    <div class="menu-item" data-name="French Fries Balado" data-price="13000">
+                        <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0086.jpg" alt="Gambar French Fries Balado" />
+                        <div class="item-title">French Fries Balado</div>
+                        <div class="item-price">Rp 13.000</div>
+                    </div>
+                    <div class="menu-item" data-name="French Fries Pedas Gila" data-price="14000">
+                        <img src="https://via.placeholder.com/300x180?text=French+Fries+Pedas+Gila" alt="Gambar French Fries Pedas Gila" />
+                        <div class="item-title">French Fries Pedas Gila</div>
+                        <div class="item-price">Rp 14.000</div>
+                    </div>
+                </div> 
+            </div> 
+
+            <div class="section"> 
+                <div class="daftar-menu-title">Promo Paket 10K</div> 
+                <div class="menu-grid menu"> 
+                    <div class="menu-item" data-name="Sambal Obong Telur Dadar" data-price="10000">
+                        <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0073.jpg" alt="Gambar Sambal Obong Telur Dadar" />
+                        <div class="item-title">Sambal Obong Telur Dadar</div>
+                        <div class="item-price">Rp 10.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Terong Crispy" data-price="10000">
+                        <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0071.jpg" alt="Gambar Sambal Obong Terong Crispy" />
+                        <div class="item-title">Sambal Obong Terong Crispy</div>
+                        <div class="item-price">Rp 10.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Tempe" data-price="10000">
+                        <img src="https://via.placeholder.com/300x180?text=Sambal+Obong+Tempe" alt="Gambar Sambal Obong Tempe" />
+                        <div class="item-title">Sambal Obong Tempe</div>
+                        <div class="item-price">Rp 10.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Kepala Ayam" data-price="12000">
+                        <img src="https://via.placeholder.com/300x180?text=Sambal+Obong+Kepala+Ayam" alt="Gambar Sambal Obong Kepala Ayam" />
+                        <div class="item-title">Sambal Obong Kepala Ayam</div>
+                        <div class="item-price">Rp 12.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Jamur Crispy" data-price="12000">
+                        <img src="https://via.placeholder.com/300x180?text=Sambal+Obong+Jamur+Crispy" alt="Gambar Sambal Obong Jamur Crispy" />
+                        <div class="item-title">Sambal Obong Jamur Crispy</div>
+                        <div class="item-price">Rp 12.000</div>
+                    </div>
+                </div> 
+            </div> 
+
+            <div class="section"> 
+                <div class="daftar-menu-title">Promo Makanan Lain</div> 
+                <div class="menu-grid menu"> 
+                    <div class="menu-item" data-name="Kremesan" data-price="4000">
+                        <img src="https://via.placeholder.com/300x180?text=Kremesan" alt="Gambar Kremesan" />
+                        <div class="item-title">Kremesan</div>
+                        <div class="item-price">Rp 4.000</div>
+                    </div>
+                    <div class="menu-item" data-name="1 Porsi Sambal Obong" data-price="4000">
+                        <img src="https://via.placeholder.com/300x180?text=1+Porsi+Sambal+Obong" alt="Gambar 1 Porsi Sambal Obong" />
+                        <div class="item-title">1 Porsi Sambal Obong</div>
+                        <div class="item-price">Rp 4.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Nasi Putih" data-price="5000">
+                        <img src="https://via.placeholder.com/300x180?text=Nasi+Putih" alt="Gambar Nasi Putih" />
+                        <div class="item-title">Nasi Putih</div>
+                        <div class="item-price">Rp 5.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Ayam + Kremesan Tanpa Sambal Tanpa Nasi" data-price="14000">
+                        <img src="https://via.placeholder.com/300x180?text=Ayam+Kremesan" alt="Gambar Ayam + Kremesan Tanpa Sambal Tanpa Nasi" />
+                        <div class="item-title">Ayam + Kremesan Tanpa Sambal Tanpa Nasi</div>
+                        <div class="item-price">Rp 14.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Ikan Banyar Asap + Tempe Tanpa Nasi" data-price="14000">
+                        <img src="https://via.placeholder.com/300x180?text=Ikan+Banyar+Asap" alt="Gambar Sambal Obong Ikan Banyar Asap + Tempe Tanpa Nasi" />
+                        <div class="item-title">Sambal Obong Ikan Banyar Asap + Tempe Tanpa Nasi</div>
+                        <div class="item-price">Rp 14.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Ikan Kembung + Tempe Tanpa Nasi" data-price="16000">
+                        <img src="https://via.placeholder.com/300x180?text=Ikan+Kembung" alt="Gambar Sambal Obong Ikan Kembung + Tempe Tanpa Nasi" />
+                        <div class="item-title">Sambal Obong Ikan Kembung + Tempe Tanpa Nasi</div>
+                        <div class="item-price">Rp 16.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Ikan Asin Klotok + Tempe + Nasi" data-price="14000">
+                        <img src="https://via.placeholder.com/300x180?text=Ikan+Asin+Klotok" alt="Gambar Sambal Obong Ikan Asin Klotok + Tempe + Nasi" />
+                        <div class="item-title">Sambal Obong Ikan Asin Klotok + Tempe + Nasi</div>
+                        <div class="item-price">Rp 14.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Ikan Pindang + Nasi" data-price="14000">
+                        <img src="https://via.placeholder.com/300x180?text=Ikan+Pindang" alt="Gambar Sambal Obong Ikan Pindang + Nasi" />
+                        <div class="item-title">Sambal Obong Ikan Pindang + Nasi</div>
+                        <div class="item-price">Rp 14.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Ayam Tanpa Nasi" data-price="16000">
+                        <img src="https://via.placeholder.com/300x180?text=Ayam" alt="Gambar Sambal Obong Ayam Tanpa Nasi" />
+                        <div class="item-title">Sambal Obong Ayam Tanpa Nasi</div>
+                        <div class="item-price">Rp 16.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Ikan Patin Tanpa Nasi" data-price="16000">
+                        <img src="https://via.placeholder.com/300x180?text=Ikan+Patin" alt="Gambar Sambal Obong Ikan Patin Tanpa Nasi" />
+                        <div class="item-title">Sambal Obong Ikan Patin Tanpa Nasi</div>
+                        <div class="item-price">Rp 16.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Ikan Nila Tanpa Nasi" data-price="17000">
+                        <img src="https://via.placeholder.com/300x180?text=Ikan+Nila" alt="Gambar Sambal Obong Ikan Nila Tanpa Nasi" />
+                        <div class="item-title">Sambal Obong Ikan Nila Tanpa Nasi</div>
+                        <div class="item-price">Rp 17.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Ikan Cakalang Tanpa Nasi" data-price="23000">
+                        <img src="https://via.placeholder.com/300x180?text=Ikan+Cakalang" alt="Gambar Sambal Obong Ikan Cakalang Tanpa Nasi" />
+                        <div class="item-title">Sambal Obong Ikan Cakalang Tanpa Nasi</div>
+                        <div class="item-price">Rp 23.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Pedo (Utuh) + Tempe" data-price="18000">
+                        <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0075.jpg" alt="Gambar Sambal Obong Pedo (Utuh) + Tempe" />
+                        <div class="item-title">Sambal Obong Pedo (Utuh) + Tempe</div>
+                        <div class="item-price">Rp 18.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Baby Crab + Nasi" data-price="18000">
+                        <img src="https://via.placeholder.com/300x180?text=Baby+Crab" alt="Gambar Sambal Obong Baby Crab + Nasi" />
+                        <div class="item-title">Sambal Obong Baby Crab + Nasi</div>
+                        <div class="item-price">Rp 18.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Udang Crispy + Nasi" data-price="25000">
+                        <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0070.jpg" alt="Gambar Sambal Obong Udang Crispy + Nasi" />
+                        <div class="item-title">Sambal Obong Udang Crispy + Nasi</div>
+                        <div class="item-price">Rp 25.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Cumi Crispy + Nasi" data-price="27000">
+                        <img src="https://raw.github.com/mnafinhl/Warung-Degan-Bakar-Rempah-dan-Sambal-Obong-Malang/main/IMG-20250605-WA0076.jpg" alt="Gambar Sambal Obong Cumi Crispy + Nasi" />
+                        <div class="item-title">Sambal Obong Cumi Crispy + Nasi</div>
+                        <div class="item-price">Rp 27.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sambal Obong Gurami + Nasi" data-price="40000">
+                        <img src="https://via.placeholder.com/300x180?text=Gurami" alt="Gambar Sambal Obong Gurami + Nasi" />
+                        <div class="item-title">Sambal Obong Gurami + Nasi</div>
+                        <div class="item-price">Rp 40.000</div>
+                    </div>
+                </div> 
+            </div> 
+
+            <div class="section"> 
+                <div class="daftar-menu-title">Menu Warmindo</div> 
+                <div class="menu-grid menu"> 
+                    <div class="menu-item" data-name="Mie Instan Goreng" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Mie+Instan+Goreng" alt="Gambar Mie Instan Goreng" />
+                        <div class="item-title">Mie Instan Goreng</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Mie Instan Kuah" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Mie+Instan+Kuah" alt="Gambar Mie Instan Kuah" />
+                        <div class="item-title">Mie Instan Kuah</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Mie Goreng Keju" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Mie+Goreng+Keju" alt="Gambar Mie Goreng Keju" />
+                        <div class="item-title">Mie Goreng Keju</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Mie Kuah Keju" data-price="7000">
+                        <img src="https://via.placeholder.com/300x180?text=Mie+Kuah+Keju" alt="Gambar Mie Kuah Keju" />
+                        <div class="item-title">Mie Kuah Keju</div>
+                        <div class="item-price">Rp 7.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Sayur" data-price="1000">
+                        <img src="https://via.placeholder.com/300x180?text=Sayur" alt="Gambar Sayur" />
+                        <div class="item-title">Sayur</div>
+                        <div class="item-price">Rp 1.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Telur" data-price="5000">
+                        <img src="https://via.placeholder.com/300x180?text=Telur" alt="Gambar Telur" />
+                        <div class="item-title">Telur</div>
+                        <div class="item-price">Rp 5.000</div>
+                    </div>
+                    <div class="menu-item" data-name="Nasi" data-price="5000">
+                        <img src="https://via.placeholder.com/300x180?text=Nasi" alt="Gambar Nasi" />
+                        <div class="item-title">Nasi</div>
+                        <div class="item-price">Rp 5.000</div>
+                    </div>
+                </div> 
+            </div> 
+        </section>
+
+        <section id="cart-section">
+            <h2>Keranjang Belanja Anda</h2>
+            <div id="customer-info">
+                <label for="customer-name">Nama Pelanggan:</label>
+                <input type="text" id="customer-name" placeholder="Masukkan nama pelanggan">
+
+                <label for="table-number">Nomor Meja:</label>
+                <input type="text" id="table-number" placeholder="Masukkan nomor meja">
+            </div>
+
+            <ul id="cart-items">
+                </ul>
+            <div id="cart-total">
+                Total: Rp 0
+            </div>
+            <div class="checkout-buttons">
+                <button class="btn-qris">Bayar dengan QRIS</button>
+                <button class="btn-cash">Bayar Tunai</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2022 Warung Degan Bakar Rempah & Sambal Obong Malang. Semua hak dilindungi.</p>
+    </footer>
+
+    <div id="overlay"></div>
+    <div id="popup-qris" class="popup">
+        <div class="popup-header">
+            <h3>Pembayaran QRIS</h3>
+        </div>
+        <div class="popup-content-body">
+            <img id="qrcode-image" src="https://via.placeholder.com/250x250?text=QRIS+Anda+Di+Sini" alt="QRIS">
+            <p id="qris-info">Silakan scan kode QRIS di atas untuk melakukan pembayaran.</p>
+
+            <div class="upload-section">
+                <label for="proof-of-payment">Unggah Bukti Pembayaran:</label>
+                <input type="file" id="proof-of-payment" accept="image/*">
+                <p id="upload-status"></p>
+            </div>
+            
+            <button id="confirm-payment-btn" class="confirm-btn">Konfirmasi Pembayaran</button>
+            <button id="close-popup-qris" class="close-btn">Batal</button>
+        </div>
+    </div>
+
+    <div id="popup-note" class="popup">
+        <div class="popup-header">
+            <h3>Tambah Catatan untuk Item</h3>
+        </div>
+        <div class="popup-content-body">
+            <p id="note-item-name"></p>
+            <textarea id="note-input" placeholder="Contoh: Tidak pedas, tanpa gula, es terpisah"></textarea>
+            <button id="save-note-btn" class="confirm-btn">Simpan Catatan</button>
+            <button id="close-note-popup" class="close-btn">Batal</button>
+        </div>
+    </div>
+
+    <div id="popup-order-success" class="popup">
+        <div class="popup-header">
+            <h3>✅ Pesanan Berhasil Dibuat!</h3>
+        </div>
+        <div class="popup-content-body">
+            <p id="order-success-message"></p>
+            <button id="close-order-success-popup" class="close-btn">OK</button>
+        </div>
+    </div>
+
+    <div id="popup-payment-confirmed" class="popup">
+        <div class="popup-header">
+            <h3>💰 Pembayaran Dikonfirmasi!</h3>
+        </div>
+        <div class="popup-content-body">
+            <p id="payment-confirmed-message"></p>
+            <button id="close-payment-confirmed-popup" class="close-btn">Selesai</button>
+        </div>
+    </div>
+
+
+    <script>
+        const menuItems = document.querySelectorAll('.menu-item');
+        const cartItemsList = document.getElementById('cart-items');
+        const cartTotalDisplay = document.getElementById('cart-total');
+        const checkoutButtonsContainer = document.querySelector('.checkout-buttons');
+        const btnQris = document.querySelector('.btn-qris');
+        const btnCash = document.querySelector('.btn-cash');
+        
+        const customerNameInput = document.getElementById('customer-name');
+        const tableNumberInput = document.getElementById('table-number');
+
+        const overlay = document.getElementById('overlay');
+        const popupQris = document.getElementById('popup-qris');
+        const closePopupQris = document.getElementById('close-popup-qris');
+        const qrisInfo = document.getElementById('qris-info');
+        const proofOfPaymentInput = document.getElementById('proof-of-payment');
+        const uploadStatus = document.getElementById('upload-status');
+        const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
+
+        const popupNote = document.getElementById('popup-note');
+        const noteItemNameDisplay = document.getElementById('note-item-name');
+        const noteInput = document.getElementById('note-input');
+        const saveNoteBtn = document.getElementById('save-note-btn');
+        const closeNotePopup = document.getElementById('close-note-popup');
+
+        // New popups for notifications
+        const popupOrderSuccess = document.getElementById('popup-order-success');
+        const orderSuccessMessage = document.getElementById('order-success-message');
+        const closeOrderSuccessPopup = document.getElementById('close-order-success-popup');
+
+        const popupPaymentConfirmed = document.getElementById('popup-payment-confirmed');
+        const paymentConfirmedMessage = document.getElementById('payment-confirmed-message');
+        const closePaymentConfirmedPopup = document.getElementById('close-payment-confirmed-popup');
+        
+        let cart = [];
+        let currentNoteItemIndex = -1;
+        let currentOrderId = null;
+
+        const BASE_URL = 'http://localhost:3000';
+        const KASIR_API_SUBMIT_ORDER_URL = `${BASE_URL}/submit-order`; 
+        const UPLOAD_API_QRIS_PROOF_URL = `${BASE_URL}/upload-qris-proof`;
+
+        function showPopup(popupElement, messageElement, message) {
+            if (messageElement && message) {
+                messageElement.textContent = message;
+            }
+            overlay.style.display = 'flex';
+            popupElement.style.display = 'block';
+        }
+
+        function hidePopup(popupElement) {
+            popupElement.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        function renderCart() {
+            cartItemsList.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsList.innerHTML = '<li>Keranjang Anda kosong.</li>';
+                cartTotalDisplay.textContent = 'Total: Rp 0';
+                checkoutButtonsContainer.style.display = 'none';
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="item-details">
+                        <span>${item.name} (${item.quantity}x)</span>
+                        <br>
+                        ${item.note ? `<span class="item-note">Catatan: ${item.note}</span>` : ''}
+                    </div>
+                    <div class="item-actions">
+                        <span>Rp ${item.price.toLocaleString('id-ID')}</span>
+                        <button class="add-note-btn" data-index="${index}">${item.note ? 'Edit Catatan' : 'Tambah Catatan'}</button>
+                        <button class="remove-item" data-index="${index}">Hapus</button>
+                    </div>
+                `;
+                cartItemsList.appendChild(li);
+                total += item.price * item.quantity;
+            });
+
+            cartTotalDisplay.textContent = `Total: Rp ${total.toLocaleString('id-ID')}`;
+            checkoutButtonsContainer.style.display = 'flex';
+        }
+
+        // Modified addItemToCart to be called from menu-item click
+        function addItemToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ name, price, quantity: 1, note: '' });
+            }
+            renderCart();
+        }
+        
+        // Event Listener for menu item clicks (add to cart)
+        // Changed from add-to-cart button to the entire menu-item div
+        menuItems.forEach(item => {
+            item.addEventListener('click', (event) => {
+                // Check if the click was specifically on the remove button, if so, don't add to cart
+                if (event.target.classList.contains('remove-item') || event.target.classList.contains('add-note-btn')) {
+                    return; 
+                }
+                const name = item.dataset.name;
+                const price = parseInt(item.dataset.price);
+                addItemToCart(name, price);
+            });
+        });
+
+        function removeItemFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+
+        cartItemsList.addEventListener('click', (event) => {
+            if (event.target.classList.contains('remove-item')) {
+                const index = parseInt(event.target.dataset.index);
+                removeItemFromCart(index);
+            } else if (event.target.classList.contains('add-note-btn')) {
+                currentNoteItemIndex = parseInt(event.target.dataset.index);
+                const item = cart[currentNoteItemIndex];
+                noteItemNameDisplay.textContent = `Untuk: ${item.name}`;
+                noteInput.value = item.note || '';
+                showPopup(popupNote);
+            }
+        });
+
+        async function submitOrderToBackend(paymentMethod) {
+            const customerName = customerNameInput.value.trim();
+            const tableNumber = tableNumberInput.value.trim();
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            if (!customerName) {
+                alert('Nama pelanggan harus diisi.');
+                return { success: false };
+            }
+            if (!tableNumber) {
+                alert('Nomor meja harus diisi.');
+                return { success: false };
+            }
+            if (cart.length === 0) {
+                alert('Keranjang belanja kosong.');
+                return { success: false };
+            }
+
+            const orderPayload = {
+                customerName: customerName,
+                tableNumber: tableNumber,
+                totalPrice: total,
+                paymentMethod: paymentMethod,
+                cart: cart.map(item => ({
+                    name: item.name,
+                    quantity: item.quantity,
+                    price: item.price,
+                    notes: item.note
+                }))
+            };
+
+            try {
+                const response = await fetch(KASIR_API_SUBMIT_ORDER_URL, { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderPayload)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`Gagal mengirim pesanan: ${response.status} ${response.statusText}. Detail: ${errorData.message}`);
+                }
+
+                const result = await response.json();
+                console.log('Pesanan berhasil dibuat di server:', result);
+                return { success: true, orderId: result.orderId };
+
+            } catch (error) {
+                console.error('Error saat mengirim pesanan:', error);
+                alert(`Terjadi kesalahan saat membuat pesanan: ${error.message}. Silakan coba lagi.`);
+                return { success: false };
+            }
+        }
+
+        async function uploadProofOfPayment(orderId, file) {
+            const formData = new FormData();
+            formData.append('qrisImage', file);
+
+            try {
+                const response = await fetch(`${UPLOAD_API_QRIS_PROOF_URL}/${orderId}`, { 
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`Gagal mengunggah bukti pembayaran: ${response.status} ${response.statusText}. Detail: ${errorData.message}`);
+                }
+
+                const result = await response.json();
+                console.log('Bukti pembayaran berhasil diunggah:', result);
+                return { success: true, filePath: result.filePath };
+
+            } catch (error) {
+                console.error('Error saat mengunggah bukti pembayaran:', error);
+                alert(`Gagal mengunggah bukti pembayaran: ${error.message}.`);
+                return { success: false };
+            }
+        }
+
+        btnQris.addEventListener('click', async () => {
+            const customerName = customerNameInput.value.trim();
+            const tableNumber = tableNumberInput.value.trim();
+            
+            if (!customerName) {
+                alert('Nama pelanggan harus diisi.');
+                return;
+            }
+            if (!tableNumber) {
+                alert('Nomor meja harus diisi.');
+                return;
+            }
+            if (cart.length === 0) {
+                alert('Keranjang belanja kosong.');
+                return;
+            }
+
+            const orderResult = await submitOrderToBackend("QRIS");
+            if (orderResult.success) {
+                currentOrderId = orderResult.orderId;
+                showPopup(popupOrderSuccess, orderSuccessMessage, `Pesanan Anda (ID: ${currentOrderId}) berhasil dibuat! Menunggu pembayaran QRIS.`);
+                // Show QRIS popup after order success is acknowledged or immediately after.
+                // For now, let's show QRIS popup after the user closes the success popup
+            } else {
+                hidePopup(popupQris); 
+            }
+        });
+
+        closeOrderSuccessPopup.addEventListener('click', () => {
+            hidePopup(popupOrderSuccess);
+            if (currentOrderId) { // Only show QRIS if an order was successfully created
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                qrisInfo.innerHTML = `Silakan scan kode QRIS di atas untuk pembayaran sejumlah **Rp ${total.toLocaleString('id-ID')}**.`;
+                uploadStatus.textContent = '';
+                proofOfPaymentInput.value = '';
+                showPopup(popupQris);
+            }
+        });
+
+        btnCash.addEventListener('click', async () => { 
+            const customerName = customerNameInput.value.trim();
+            const tableNumber = tableNumberInput.value.trim();
+
+            if (!customerName) {
+                alert('Nama pelanggan harus diisi.');
+                return;
+            }
+            if (!tableNumber) {
+                alert('Nomor meja harus diisi.');
+                return;
+            }
+            if (cart.length === 0) {
+                alert('Keranjang belanja kosong.');
+                return;
+            }
+
+            const orderResult = await submitOrderToBackend("Tunai");
+            
+            if (orderResult.success) {
+                showPopup(popupPaymentConfirmed, paymentConfirmedMessage, `Pesanan (ID: ${orderResult.orderId}) telah berhasil, mohon untuk segera bayar di kasir. Terima kasih atas pesanan Anda!`);
+                cart = [];
+                renderCart();
+                customerNameInput.value = '';
+                tableNumberInput.value = '';
+            }
+        });
+
+        closePaymentConfirmedPopup.addEventListener('click', () => {
+            hidePopup(popupPaymentConfirmed);
+        });
+
+        saveNoteBtn.addEventListener('click', () => {
+            if (currentNoteItemIndex !== -1) {
+                cart[currentNoteItemIndex].note = noteInput.value.trim();
+                renderCart();
+                hidePopup(popupNote);
+            }
+        });
+
+        closeNotePopup.addEventListener('click', () => {
+            hidePopup(popupNote);
+            currentNoteItemIndex = -1;
+            noteInput.value = '';
+        });
+
+        proofOfPaymentInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                uploadStatus.textContent = `File dipilih: ${file.name}`;
+            } else {
+                uploadStatus.textContent = 'Tidak ada file dipilih.';
+            }
+        });
+
+        confirmPaymentBtn.addEventListener('click', async () => { 
+            if (!currentOrderId) {
+                alert('Terjadi kesalahan: Pesanan belum terdaftar di server. Mohon coba lagi dari awal.');
+                hidePopup(popupQris);
+                return;
+            }
+
+            if (proofOfPaymentInput.files.length === 0) {
+                alert('Mohon unggah bukti pembayaran Anda.');
+                return;
+            }
+            const proofFile = proofOfPaymentInput.files[0];
+
+            uploadStatus.textContent = 'Mengunggah bukti...';
+            const uploadResult = await uploadProofOfPayment(currentOrderId, proofFile);
+            
+            if (uploadResult.success) {
+                hidePopup(popupQris);
+                showPopup(popupPaymentConfirmed, paymentConfirmedMessage, `Bukti pembayaran untuk pesanan ID ${currentOrderId} telah diunggah. Pesanan Anda akan segera diproses. Terima kasih atas pesanan Anda!`);
+                cart = [];
+                renderCart();
+                customerNameInput.value = '';
+                tableNumberInput.value = '';
+                currentOrderId = null;
+            } else {
+                uploadStatus.textContent = 'Gagal mengunggah. Coba lagi.';
+            }
+        });
+
+        closePopupQris.addEventListener('click', () => {
+            hidePopup(popupQris);
+            currentOrderId = null;
+        });
+
+        renderCart();
+    </script>
+</body>
+</html>
